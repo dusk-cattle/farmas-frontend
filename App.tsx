@@ -1,9 +1,16 @@
 // deps
 import React from 'react';
+// import { StyleSheet, Text, View, AppRegistry } from 'react-native';
+// import { NativeRouter, Route, Link } from 'react-router-native';
 
 // screens
-import { Home } from './src/screens';
+import { RegisterPage } from './src/screens';
 
 export default function App() {
-  return <Home />;
+  return (
+    <RegisterPage />
+    // <NativeRouter>
+    //   <Route path="/" component={RegisterPage} />
+    // </NativeRouter>
+  );
 }
