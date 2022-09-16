@@ -6,11 +6,7 @@ import { Link } from 'react-router-native';
 // styles
 import { Container, Banner } from './styles';
 
-// types
-import { RegisterPageProps } from './types';
-
-export function RegisterPage(props: RegisterPageProps) {
-  const [name, setName] = React.useState('');
+export function LoginPage() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -30,32 +26,10 @@ export function RegisterPage(props: RegisterPageProps) {
       </Text>
 
       <View style={{ flex: 1, padding: 24, paddingBottom: 48 }}>
-        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Olá!</Text>
+        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Bem vindo!</Text>
         <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 24 }}>
-          Cadastre-se para começar a usar
+          Faça o login para acessar a plataforma
         </Text>
-
-        <Text
-          style={{
-            fontSize: 12,
-            fontWeight: '500',
-            marginBottom: 6,
-            marginLeft: 6,
-          }}>
-          Nome
-        </Text>
-        <TextInput
-          style={{
-            height: 38,
-            borderWidth: 1,
-            padding: 10,
-            borderColor: '#F0DBE5',
-            borderRadius: 6,
-            marginBottom: 18,
-          }}
-          onChangeText={setName}
-          value={name}
-        />
 
         <Text
           style={{
@@ -107,7 +81,7 @@ export function RegisterPage(props: RegisterPageProps) {
             padding: 12,
             marginTop: 'auto',
           }}>
-          <Button color="white" title="Cadastrar" />
+          <Button color="white" title="Entrar" />
         </View>
 
         <View
@@ -116,14 +90,9 @@ export function RegisterPage(props: RegisterPageProps) {
             justifyContent: 'center',
             marginTop: 18,
           }}>
-          <Text>Já possui uma conta? </Text>
-          <Link to="login">
-            <Text
-              style={{
-                color: '#46AC50',
-              }}>
-              Entre
-            </Text>
+          <Text>Não possui conta? </Text>
+          <Link to="/">
+            <Text style={{ color: '#46AC50' }}>Cadastre-se</Text>
           </Link>
         </View>
       </View>
