@@ -9,17 +9,19 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 
 // components
-import { Root } from './pages';
+import { Root, RegisterPage, LoginPage } from './pages';
+
+// enums
+import { Routes } from './enums';
 
 // styles
 import './index.css';
 import { defaultTheme } from './styles';
 
 const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Root />,
-  },
+  { path: Routes.ROOT, element: <Root /> },
+  { path: Routes.REGISTER, element: <RegisterPage /> },
+  { path: Routes.LOGIN, element: <LoginPage /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
