@@ -1,8 +1,8 @@
 // models
-import { User } from '../models';
+import { User } from '../../models';
 
 // enums
-import { Roles } from '../enums';
+import { Roles } from '../../enums';
 
 export async function getSession() {
   return await new Promise<User | null>((resolve) => {
@@ -10,7 +10,7 @@ export async function getSession() {
     const s = 1000 * ms;
 
     setTimeout(() => {
-      // return resolve(null);
+      return resolve(null);
 
       resolve({
         id: '2o84rhfg38r9gy32bq4oi',
