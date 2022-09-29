@@ -11,7 +11,6 @@ export async function getSession() {
 
     setTimeout(() => {
       return resolve(null);
-
       resolve({
         id: '2o84rhfg38r9gy32bq4oi',
         name: 'Jonas Manoel',

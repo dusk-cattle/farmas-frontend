@@ -1,5 +1,6 @@
 // deps
 import styled from 'styled-components';
+import { RiEyeLine, RiEyeCloseLine } from 'react-icons/ri';
 
 export const Container = styled.div`
   height: 3rem;
@@ -41,4 +42,16 @@ export const Label = styled.label`
   }
 `;
 
-export const TrueInput = styled.input``;
+export const OpenedEyeIcon = styled(RiEyeLine)`
+  min-width: 1rem;
+  min-height: 1rem;
+
+  color: ${({ theme }) => theme.foreground};
+`;
+
+export const ClosedEyeIcon = styled(RiEyeCloseLine)`
+  min-width: 1rem;
+  min-height: 1rem;
+
+  color: ${({ theme }) => theme.foreground};
+`;

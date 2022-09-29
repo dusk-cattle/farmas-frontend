@@ -4,25 +4,24 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 // usecases
-import { createUser, login } from '../../usecases';
+import { createUser, login } from '../../../usecases';
 
 // enums
-import { Roles, Routes } from '../../enums';
+import { Roles, Routes } from '../../../enums';
 
 // styles
 import {
   Container,
   Banner,
+  LeafIcon,
   H1,
   H2,
   Input,
-  RadioGroup,
-  Radio,
-  Label,
   Button,
   Span,
   Link,
-} from './styles';
+} from '../styles';
+import { RadioGroup, Radio, Label } from './styles';
 
 // types
 import { FormData } from './types';
@@ -54,7 +53,10 @@ export function RegisterPage() {
 
   return (
     <Container onSubmit={handleSubmit(signIn)}>
-      <Banner />
+      <Banner>
+        <LeafIcon />
+        FARMAS
+      </Banner>
 
       <H1>Bem-vindo!</H1>
       <H2>Cadastre-se para começar a usar</H2>

@@ -1,6 +1,7 @@
 // deps
 import styled from 'styled-components';
 import { Link as DefaultLink } from 'react-router-dom';
+import { IoMdLeaf } from 'react-icons/io';
 
 // components
 import { Input as DefaultInput } from '../../components';
@@ -22,14 +23,26 @@ export const Container = styled.form`
 `;
 
 export const Banner = styled.div`
-  width: 100%;
-  height: 10rem;
+  height: 7rem;
   margin-bottom: 1.5rem;
+  padding: 1.5rem;
+
+  display: flex;
+  align-items: end;
 
   background-image: url(${truckBanner});
   background-size: cover;
   border-radius: 0 0 1rem 1rem;
   background-position: center;
+  font-size: 2rem;
+  line-height: 2rem;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+`;
+
+export const LeafIcon = styled(IoMdLeaf)`
+  width: 1.75rem;
+  height: 1.75rem;
 `;
 
 const horizontalPadding = '1.5rem';

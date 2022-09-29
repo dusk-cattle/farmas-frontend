@@ -1,5 +1,5 @@
 // enums
-import { Roles } from '../../enums';
+import { Roles } from '../../../enums';
 
 export interface FormData {
   name: string;

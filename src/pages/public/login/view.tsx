@@ -4,13 +4,23 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 // usecases
-import { login } from '../../usecases';
+import { login } from '../../../usecases';
 
 // enums
-import { Routes } from '../../enums';
+import { Routes } from '../../../enums';
 
 // styles
-import { Container, Banner, H1, H2, Input, Button, Span, Link } from './styles';
+import {
+  Container,
+  Banner,
+  LeafIcon,
+  H1,
+  H2,
+  Input,
+  Button,
+  Span,
+  Link,
+} from '../styles';
 
 // types
 import { FormData } from './types';
@@ -36,10 +46,13 @@ export function LoginPage() {
 
   return (
     <Container onSubmit={handleSubmit(signIn)}>
-      <Banner />
+      <Banner>
+        <LeafIcon />
+        FARMAS
+      </Banner>
 
-      <H1>Bem-vindo!</H1>
-      <H2>Cadastre-se para começar a usar</H2>
+      <H1>Bem-vindo de volta!</H1>
+      <H2>Entre para usar a plataforma</H2>
 
       <Input {...register('email')} label="E-mail" />
       <Input {...register('password')} label="Senha" type="password" />
