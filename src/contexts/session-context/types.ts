@@ -2,10 +2,10 @@
 import { ReactNode } from 'react';
 
 // models
-import { User } from '../../models';
+import { Session } from '../../models';
 
 export interface SessionContextValue {
-  user: User | null;
+  data: Session | null;
   loading: boolean;
   fetch(): Promise<void>;
 }

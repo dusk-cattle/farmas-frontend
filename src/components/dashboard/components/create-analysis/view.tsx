@@ -1,9 +1,12 @@
 // deps
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 // models
 import { Substance } from '../../../../models';
+
+// usecases
+import { getSubstances } from '../../../../usecases';
 
 // components
 import { Input, SelectSubstance } from '../../..';
@@ -28,11 +31,13 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
 
   const { handleSubmit, register, formState } = useForm({ mode: 'onChange' });
 
-  const [allSubstances] = useState<Substance[]>([
-    { id: '123', name: 'Zinco' },
-    { id: '345', name: 'Cálcio' },
-    { id: '567', name: 'Potássio' },
-  ]);
+  const [allSubstances, setAllSubstances] = useState<Substance[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      setAllSubstances(await getSubstances());
+    })();
+  }, []);
 
   const [selectedSubstances, setSelectedSubstances] = useState<Substance[]>([]);
 

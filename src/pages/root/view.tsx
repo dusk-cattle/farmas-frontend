@@ -18,7 +18,7 @@ export function Root() {
   const {
     fetch: fetchSession,
     loading: loadingSession,
-    user: sessionUser,
+    data: sessionData,
   } = useContext(SessionContext);
 
   useEffect(() => {
@@ -30,8 +30,8 @@ export function Root() {
   useEffect(() => {
     if (loadingSession) return;
 
-    if (!sessionUser) navigate(Routes.LOGIN);
-  }, [loadingSession, sessionUser, navigate]);
+    if (!sessionData) navigate(Routes.LOGIN);
+  }, [loadingSession, sessionData, navigate]);
 
   if (loadingSession)
     return (

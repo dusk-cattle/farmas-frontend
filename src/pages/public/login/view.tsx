@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Login } from '../../../backend';
-import { getSession } from '../../../backend/controllers/User/getSession';
 
 // enums
 import { Routes } from '../../../enums';

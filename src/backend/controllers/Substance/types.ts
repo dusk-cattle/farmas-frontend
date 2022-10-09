@@ -1,5 +1,5 @@
-export interface SubstanceProps {
-   id: string;
-   name: string;
-   property1: number;
-}
+export type SubstanceProps = {
+  id: string;
+  name: string;
+  property1: number;
+}[];
