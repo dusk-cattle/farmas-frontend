@@ -25,11 +25,9 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <ThemeProvider theme={defaultTheme}>
-      <RouterProvider router={router} />
-    </ThemeProvider>
-  </React.StrictMode>
+  <ThemeProvider theme={defaultTheme}>
+    <RouterProvider router={router} />
+  </ThemeProvider>
 );
 
 // If you want your app to work offline and load faster, you can change
