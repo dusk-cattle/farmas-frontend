@@ -12,3 +12,15 @@ export interface LoginProps {
    email: string;
    password: string;
 }
+
+export interface LoginResponse {
+   id: string;
+   name: string;
+   password: string;
+}
+
+export interface GetSessionProps {
+   user: { id: string; name: string; email: string };
+   resource: { id: string; name: string; ownerRole: string };
+   role: string;
+}
