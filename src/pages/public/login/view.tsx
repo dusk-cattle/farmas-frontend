@@ -2,9 +2,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-
-// usecases
-import { login } from '../../../usecases';
+import { Login } from '../../../backend';
+import { getSession } from '../../../backend/controllers/User/getSession';
 
 // enums
 import { Routes } from '../../../enums';
@@ -36,7 +35,7 @@ export function LoginPage() {
     setLoading(true);
 
     const { email, password } = data;
-    const success = await login({ email, password });
+    const success = await Login({ email, password });
 
     if (success) navigate(Routes.ROOT);
 
