@@ -11,6 +11,9 @@ import { Dashboard } from '../../components';
 // enums
 import { Routes } from '../../enums';
 
+// styles
+import { LoadingContainer, Loading } from './styles';
+
 export function Root() {
   const {
     fetch: fetchSession,
@@ -30,7 +33,12 @@ export function Root() {
     if (!sessionUser) navigate(Routes.LOGIN);
   }, [loadingSession, sessionUser, navigate]);
 
-  if (loadingSession) return <div>carregando...</div>;
+  if (loadingSession)
+    return (
+      <LoadingContainer>
+        <Loading />
+      </LoadingContainer>
+    );
 
   return <Dashboard />;
 }

@@ -28,7 +28,7 @@ import { FormData } from './types';
 export function LoginPage() {
   const { register, handleSubmit } = useForm<FormData>();
 
-  const [, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -56,7 +56,9 @@ export function LoginPage() {
       <Input {...register('email')} label="E-mail" />
       <Input {...register('password')} label="Senha" type="password" />
 
-      <Button type="submit">Entrar</Button>
+      <Button disabled={loading} type="submit">
+        {loading ? '...' : 'Entrar'}
+      </Button>
       <Span>
         Ainda não possui uma conta?{' '}
         <Link to={Routes.REGISTER}>Registre-se</Link>
