@@ -51,8 +51,13 @@ export function LoginPage() {
       <H1>Bem-vindo de volta!</H1>
       <H2>Entre para usar a plataforma</H2>
 
-      <Input {...register('email')} label="E-mail" />
-      <Input {...register('password')} label="Senha" type="password" />
+      <Input {...register('email')} label="E-mail" placeholder="Digite aqui" />
+      <Input
+        {...register('password')}
+        label="Senha"
+        type="password"
+        placeholder="Digite aqui"
+      />
 
       <Button disabled={loading} type="submit">
         {loading ? '...' : 'Entrar'}

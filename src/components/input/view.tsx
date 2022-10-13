@@ -8,7 +8,7 @@ import { Container, Label, OpenedEyeIcon, ClosedEyeIcon } from './styles';
 import { InputProps } from './types';
 
 export const Input = forwardRef((props: InputProps, ref: any) => {
-  const { className, label, ...rest } = props;
+  const { className, label, error, ...rest } = props;
 
   const [showPassword, setShowPassword] = useState<boolean | null>(
     rest.type === 'password' ? false : null
@@ -24,7 +24,7 @@ export const Input = forwardRef((props: InputProps, ref: any) => {
   }
 
   return (
-    <Container className={className}>
+    <Container className={className} error={!!error}>
       <Label htmlFor={rest.id}>{label}</Label>
       <input ref={ref} {...rest} type={showPassword ? 'text' : rest.type} />
       {renderEye()}

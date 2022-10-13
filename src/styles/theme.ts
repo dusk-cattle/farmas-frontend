@@ -7,4 +7,5 @@ export const defaultTheme: DefaultTheme = {
   border: '#F0DBE5',
   primary: '#46AC50',
   secondary: '#e9cc53',
+  error: '#f66',
 };

@@ -1,5 +1,5 @@
 // deps
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link as DefaultLink } from 'react-router-dom';
 import { IoMdLeaf } from 'react-icons/io';
 
@@ -81,6 +81,12 @@ export const Button = styled.button`
   font-size: 1rem;
   font-weight: 600;
   color: white;
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      color: #fff5;
+    `}
 `;
 
 export const Span = styled.p`

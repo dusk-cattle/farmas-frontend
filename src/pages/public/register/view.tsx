@@ -27,11 +27,20 @@ import { RadioGroup, Radio, Label } from './styles';
 import { FormData } from './types';
 
 export function RegisterPage() {
-  const { register, handleSubmit, watch } = useForm<FormData>();
+  const { register, handleSubmit, watch, formState } = useForm<FormData>({
+    mode: 'onChange',
+  });
 
-  const role = watch('role');
+  const [role, password] = watch(['role', 'password']);
 
   const [, setLoading] = useState(false);
+
+  function validateEmailFormat(value: string) {
+    return (
+      !!value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)?.length ||
+      'E-mail inválido'
+    );
+  }
 
   const navigate = useNavigate();
 
@@ -51,6 +60,10 @@ export function RegisterPage() {
     setLoading(false);
   }
 
+  console.log('campos sujos', formState.dirtyFields);
+  console.log('está sujo', formState.isDirty);
+  console.log('é válido', formState.isValid);
+
   return (
     <Container onSubmit={handleSubmit(signIn)}>
       <Banner>
@@ -61,27 +74,59 @@ export function RegisterPage() {
       <H1>Bem-vindo!</H1>
       <H2>Cadastre-se para começar a usar</H2>
 
-      <Input {...register('name')} label="Nome" />
-      <Input {...register('email')} label="E-mail" />
-      <Input {...register('password')} label="Senha" type="password" />
       <Input
-        {...register('confirmPassword')}
+        {...register('name', { required: 'Digite seu nome' })}
+        label="Nome"
+        placeholder="Digite aqui"
+        error={formState.errors.name?.message}
+      />
+      <Input
+        {...register('email', {
+          required: 'Digite seu nome',
+          validate: validateEmailFormat,
+        })}
+        label="E-mail"
+        placeholder="Digite aqui"
+        error={formState.errors.email?.message}
+      />
+      <Input
+        {...register('password', { required: true })}
+        label="Senha"
+        type="password"
+        placeholder="Digite aqui"
+        error={formState.errors.password?.message}
+      />
+      <Input
+        {...register('confirmPassword', {
+          required: true,
+          validate: (value) => value === password || 'As senhas não são iguais',
+        })}
         label="Confirme a senha"
         type="password"
+        placeholder="Digite aqui"
+        error={formState.errors.confirmPassword?.message}
       />
 
       <RadioGroup>
         <Label checked={role === Roles.OWNER}>
-          <Radio {...register('role')} value={Roles.OWNER} />
+          <Radio
+            {...register('role', { required: true })}
+            value={Roles.OWNER}
+          />
           Sou dono
         </Label>
         <Label checked={role === Roles.WORKER}>
-          <Radio {...register('role')} value={Roles.WORKER} />
+          <Radio
+            {...register('role', { required: true })}
+            value={Roles.WORKER}
+          />
           Sou operador
         </Label>
       </RadioGroup>
 
-      <Button type="submit">Cadastrar</Button>
+      <Button type="submit" disabled={!formState.isValid}>
+        Cadastrar
+      </Button>
       <Span>
         Já possui uma conta? <Link to={Routes.LOGIN}>Entre</Link>
       </Span>

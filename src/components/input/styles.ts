@@ -1,8 +1,11 @@
 // deps
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { RiEyeLine, RiEyeCloseLine } from 'react-icons/ri';
 
-export const Container = styled.div`
+// types
+import { ContainerProps } from './types';
+
+export const Container = styled.div<ContainerProps>`
   height: 3rem;
   padding: 0 1rem;
 
@@ -26,7 +29,17 @@ export const Container = styled.div`
     color: ${({ theme }) => theme.foreground};
     font-size: 0.875rem;
     line-height: 0.875rem;
+
+    ::placeholder {
+      color: ${({ theme }) => theme.border};
+    }
   }
+
+  ${({ error }) =>
+    error &&
+    css`
+      border: 1px solid ${({ theme }) => theme.error};
+    `}
 `;
 
 export const Label = styled.label`
