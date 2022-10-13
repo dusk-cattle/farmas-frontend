@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { Substance } from '../../../../models';
 
 // usecases
-import { getSubstances } from '../../../../usecases';
+import { getSubstances, postAnalysis } from '../../../../usecases';
 
 // components
 import { Input, SelectSubstance } from '../../..';
@@ -51,8 +51,10 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
 
   const [showSelector, setShowSelector] = useState(false);
 
-  function createAnalysis(data: Record<string, number>) {
-    console.log(data);
+  async function createAnalysis(data: Record<string, number>) {
+    try {
+      await postAnalysis(data);
+    } catch (e) {}
   }
 
   return (
