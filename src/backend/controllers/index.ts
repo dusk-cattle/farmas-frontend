@@ -1,2 +1,3 @@
-export * from "./User";
-export * from "./Substance";
+export * from './Analysis';
+export * from './User';
+export * from './Substance';
