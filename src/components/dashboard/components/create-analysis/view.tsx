@@ -74,6 +74,7 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
             name={substance.id}
             label={substance.name}
             type="number"
+            placeholder="Digite aqui"
           />
         ))}
 

@@ -82,7 +82,7 @@ export function RegisterPage() {
       />
       <Input
         {...register('email', {
-          required: 'Digite seu nome',
+          required: 'Digite seu e-mail',
           validate: validateEmailFormat,
         })}
         label="E-mail"
@@ -90,7 +90,7 @@ export function RegisterPage() {
         error={formState.errors.email?.message}
       />
       <Input
-        {...register('password', { required: true })}
+        {...register('password', { required: 'Digite sua senha' })}
         label="Senha"
         type="password"
         placeholder="Digite aqui"

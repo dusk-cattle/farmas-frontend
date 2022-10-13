@@ -24,9 +24,18 @@ import {
 import { FormData } from './types';
 
 export function LoginPage() {
-  const { register, handleSubmit } = useForm<FormData>();
+  const { register, handleSubmit, formState } = useForm<FormData>({
+    mode: 'onChange',
+  });
 
   const [loading, setLoading] = useState(false);
+
+  function validateEmailFormat(value: string) {
+    return (
+      !!value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)?.length ||
+      'E-mail inválido'
+    );
+  }
 
   const navigate = useNavigate();
 
@@ -51,15 +60,24 @@ export function LoginPage() {
       <H1>Bem-vindo de volta!</H1>
       <H2>Entre para usar a plataforma</H2>
 
-      <Input {...register('email')} label="E-mail" placeholder="Digite aqui" />
       <Input
-        {...register('password')}
+        {...register('email', {
+          required: 'Digite seu e-mail',
+          validate: validateEmailFormat,
+        })}
+        label="E-mail"
+        placeholder="Digite aqui"
+        error={formState.errors.email?.message}
+      />
+      <Input
+        {...register('password', { required: 'Digite sua senha' })}
         label="Senha"
         type="password"
         placeholder="Digite aqui"
+        error={formState.errors.password?.message}
       />
 
-      <Button disabled={loading} type="submit">
+      <Button disabled={!formState.isValid || loading} type="submit">
         {loading ? '...' : 'Entrar'}
       </Button>
       <Span>
