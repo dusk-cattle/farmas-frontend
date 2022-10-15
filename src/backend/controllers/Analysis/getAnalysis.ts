@@ -1,10 +1,9 @@
-// types
 import axios from "axios";
+import { Analysis } from "./types";
+import { LocalData } from "../../enums/localData";
 import { Connections } from "../../enums/connections";
 
-import { SubstanceProps } from "./types";
-
-export async function GetSubstances(): Promise<SubstanceProps> {
+export async function GettAnalysis(analysis: Analysis, isOnline: Boolean) {
    try {
       const item = localStorage.getItem("user");
       var token = " ";
@@ -16,7 +15,7 @@ export async function GetSubstances(): Promise<SubstanceProps> {
             Authorization: "Bearer " + token,
          },
       };
-      const response = await axios.get(Connections.FARMAS + "/SubstanceRegistry", config);
+      const response = await axios.get(Connections.FARMAS + "/SoilAnalysis", config);
       return response.data;
    } catch (error) {
       return [];

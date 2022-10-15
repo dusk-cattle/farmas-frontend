@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Analysis } from "./types";
 import { LocalData } from "../../enums/localData";
+import { Connections } from "../../enums/connections";
 
 export async function PostAnalysis(analysis: Analysis, isOnline: Boolean) {
    try {
@@ -15,7 +16,8 @@ export async function PostAnalysis(analysis: Analysis, isOnline: Boolean) {
                Authorization: "Bearer " + token,
             },
          };
-         const response = await axios.post("http://localhost:5090/api/SoilAnalysis", analysis, config);
+
+         const response = await axios.post(Connections.FARMAS + "/SoilAnalysis", analysis, config);
          return true;
       } else {
          localStorage.setItem(LocalData.ANALYSIS_KEY, JSON.stringify(analysis));
