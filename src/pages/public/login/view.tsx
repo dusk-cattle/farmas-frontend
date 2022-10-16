@@ -1,8 +1,13 @@
 // deps
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { Login } from '../../../backend';
+
+// usecases
+import { login } from '../../../usecases';
+
+// contexts
+import { ToastContext } from '../../../contexts';
 
 // enums
 import { Routes } from '../../../enums';
@@ -39,13 +44,16 @@ export function LoginPage() {
 
   const navigate = useNavigate();
 
+  const { toast } = useContext(ToastContext);
+
   async function signIn(data: FormData) {
     setLoading(true);
 
     const { email, password } = data;
-    const success = await Login({ email, password });
+    const success = await login({ email, password });
 
     if (success) navigate(Routes.ROOT);
+    else toast('Não foi possível realizar o login');
 
     setLoading(false);
   }

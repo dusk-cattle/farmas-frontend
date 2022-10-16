@@ -15,11 +15,13 @@ interface AnalysisFromBackend {
 export async function postAnalysis(data: Analisys): Promise<void> {
   const parsedAnalysis: AnalysisFromBackend = { Substances: [] };
 
+  const Timestamp = new Date();
+
   Object.entries(data).forEach(([substanceID, value]) => {
     parsedAnalysis.Substances.push({
       SubstanceRegistryId: substanceID,
       Value: value,
-      Timestamp: new Date(),
+      Timestamp,
     });
   });
 

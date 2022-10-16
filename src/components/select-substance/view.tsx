@@ -1,6 +1,5 @@
 // deps
 import React from 'react';
-import { useController } from 'react-hook-form';
 
 // models
 import { Substance } from '../../models';

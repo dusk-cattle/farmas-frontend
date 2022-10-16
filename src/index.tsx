@@ -1,5 +1,4 @@
 // deps
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -7,6 +6,9 @@ import { ThemeProvider } from 'styled-components';
 // config
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+
+// providers
+import { ToastContextProvider } from './contexts';
 
 // components
 import { Root, RegisterPage, LoginPage } from './pages';
@@ -26,7 +28,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <ThemeProvider theme={defaultTheme}>
-    <RouterProvider router={router} />
+    <ToastContextProvider>
+      <RouterProvider router={router} />
+    </ToastContextProvider>
   </ThemeProvider>
 );
 
