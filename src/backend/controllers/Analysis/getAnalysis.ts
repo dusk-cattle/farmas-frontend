@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Analysis } from "./types";
+import { Analysis, SubstanceAnalysisModel } from "./types";
 import { LocalData } from "../../enums/localData";
 import { Connections } from "../../enums/connections";
 
@@ -15,8 +15,8 @@ export async function GettAnalysis(analysis: Analysis, isOnline: Boolean) {
             Authorization: "Bearer " + token,
          },
       };
-      const response = await axios.get(Connections.FARMAS + "/SoilAnalysis", config);
-      return response.data;
+      const response = await axios.get<SubstanceAnalysisModel>(Connections.FARMAS + "/SoilAnalysis", config);
+      return response;
    } catch (error) {
       return [];
    }
