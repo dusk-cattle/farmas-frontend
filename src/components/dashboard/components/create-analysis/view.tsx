@@ -1,5 +1,5 @@
 // deps
-import { useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 // models
@@ -7,6 +7,9 @@ import { Substance } from '../../../../models';
 
 // usecases
 import { getSubstances, postAnalysis } from '../../../../usecases';
+
+// contexts
+import { ToastContext } from '../../../../contexts';
 
 // components
 import { Input, SelectSubstance } from '../../..';
@@ -33,11 +36,17 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
 
   const [allSubstances, setAllSubstances] = useState<Substance[]>([]);
 
+  const { toast } = useContext(ToastContext);
+
   useEffect(() => {
     (async () => {
-      setAllSubstances(await getSubstances());
+      try {
+        setAllSubstances(await getSubstances());
+      } catch (e) {
+        toast('Não foi possível carregar as substâncias');
+      }
     })();
-  }, []);
+  }, [toast]);
 
   const [selectedSubstances, setSelectedSubstances] = useState<Substance[]>([]);
 

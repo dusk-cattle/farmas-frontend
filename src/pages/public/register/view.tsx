@@ -1,10 +1,13 @@
 // deps
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 // usecases
 import { createUser, login } from '../../../usecases';
+
+// contexts
+import { ToastContext } from '../../../contexts';
 
 // enums
 import { Roles, Routes } from '../../../enums';
@@ -42,6 +45,8 @@ export function RegisterPage() {
     );
   }
 
+  const { toast } = useContext(ToastContext);
+
   const navigate = useNavigate();
 
   async function signIn(data: FormData) {
@@ -55,7 +60,8 @@ export function RegisterPage() {
       const logged = await login({ email, password });
 
       if (logged) navigate(Routes.ROOT);
-    }
+      else toast('Não foi possível realizar o login');
+    } else toast('Não foi possível registrar o usuário');
 
     setLoading(false);
   }
