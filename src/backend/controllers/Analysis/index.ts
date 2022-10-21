@@ -1,2 +1,2 @@
 export { PostAnalysis } from "./postAnalysis";
-export { GettAnalysis } from "./getAnalysis";
+export { GetAnalysis } from "./getAnalysis";

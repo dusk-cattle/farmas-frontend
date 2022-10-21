@@ -3,7 +3,7 @@ import { Analysis, SubstanceAnalysisModel } from "./types";
 import { LocalData } from "../../enums/localData";
 import { Connections } from "../../enums/connections";
 
-export async function GettAnalysis(analysis: Analysis, isOnline: Boolean) {
+export async function GetAnalysis() {
    try {
       const item = localStorage.getItem("user");
       var token = " ";
