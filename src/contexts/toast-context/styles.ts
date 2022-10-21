@@ -29,6 +29,6 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.error};
   box-shadow: 0 1rem 4rem #0009;
   animation-name: ${animation};
-  animation-duration: 3s;
+  animation-duration: 3050ms;
   animation-timing-function: ease;
 `;

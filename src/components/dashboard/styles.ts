@@ -14,6 +14,10 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.background};
 `;
 
+export const Body = styled.div`
+  overflow: scroll;
+`;
+
 export const Map = styled.div`
   height: 18rem;
 
@@ -31,8 +35,10 @@ export const Header = styled.header`
 `;
 
 export const Title = styled.h1`
-  font-size: 1.25rem;
+  top: 1rem;
+  position: fixed;
 
+  font-size: 1.25rem;
   color: ${({ theme }) => theme.background};
 `;
 
