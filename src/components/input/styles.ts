@@ -1,6 +1,7 @@
 // deps
 import styled, { css } from 'styled-components';
 import { RiEyeLine, RiEyeCloseLine } from 'react-icons/ri';
+import { MdInfoOutline } from 'react-icons/md';
 
 // types
 import { ContainerProps } from './types';
@@ -12,11 +13,12 @@ export const Container = styled.div<ContainerProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: ${({ gap }) => gap}rem;
 
   border-radius: 1.125rem;
   border: 1px solid ${({ theme }) => theme.border};
   background: ${({ theme }) => theme.background};
+  color: ${({ theme }) => theme.foreground};
 
   input {
     width: 100%;
@@ -63,6 +65,13 @@ export const OpenedEyeIcon = styled(RiEyeLine)`
 `;
 
 export const ClosedEyeIcon = styled(RiEyeCloseLine)`
+  min-width: 1rem;
+  min-height: 1rem;
+
+  color: ${({ theme }) => theme.foreground};
+`;
+
+export const InfoIcon = styled(MdInfoOutline)`
   min-width: 1rem;
   min-height: 1rem;
 

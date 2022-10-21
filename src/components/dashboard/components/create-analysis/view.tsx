@@ -40,11 +40,11 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
 
   useEffect(() => {
     (async () => {
-      try {
-        setAllSubstances(await getSubstances());
-      } catch (e) {
-        toast('Não foi possível carregar as substâncias');
-      }
+      const susbtances = await getSubstances();
+
+      if (!susbtances.length)
+        return toast('Não foi possível carregar as substâncias');
+      setAllSubstances(susbtances);
     })();
   }, [toast]);
 
@@ -82,7 +82,9 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
             key={substance.id}
             name={substance.id}
             label={substance.name}
-            type="number"
+            unit={substance.unit}
+            type="substance"
+            info={substance.description}
             placeholder="Digite aqui"
           />
         ))}

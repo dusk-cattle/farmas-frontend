@@ -2,11 +2,12 @@
 import { useState } from 'react';
 
 // components
-import { CreateAnalysis } from './components';
+import { Chart, CreateAnalysis } from './components';
 
 // styles
 import {
   Container,
+  Body,
   Map,
   Header,
   Title,
@@ -25,20 +26,24 @@ export function Dashboard() {
 
   return (
     <Container>
-      <Map>
-        <Header>
-          <Title>Fazenda Feliz</Title>
-        </Header>
+      <Body>
+        <Map>
+          <Header>
+            <Title>Fazenda Feliz</Title>
+          </Header>
 
-        <FarmContainer>
-          <EmptyTitle>Nada para exibir</EmptyTitle>
-          <EmptyDescription>
-            Não há dados suficientes para
-            <br />
-            exibir sua fazenda
-          </EmptyDescription>
-        </FarmContainer>
-      </Map>
+          <FarmContainer>
+            <EmptyTitle>Nada para exibir</EmptyTitle>
+            <EmptyDescription>
+              Não há dados suficientes para
+              <br />
+              exibir sua fazenda
+            </EmptyDescription>
+          </FarmContainer>
+        </Map>
+
+        {/* <Chart /> */}
+      </Body>
 
       <CreateAnalysisButton onClick={() => setCreatingAnalysis(true)}>
         <FileIcon />
