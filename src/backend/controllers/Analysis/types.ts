@@ -8,7 +8,7 @@ export interface Analysis {
    Substances: SubstanceModelRegistry[];
 }
 
-export interface SubstanceAnalysisModel {
+export interface AnalysisProps {
    id: string;
    substanceRegistryId: string;
    soilAnalysisId: string;
@@ -21,5 +21,5 @@ export interface AnalysisModel {
    id: string;
    operatorId: string;
    timestamp: string;
-   substance: SubstanceAnalysisModel[];
+   substance: AnalysisProps[];
 }

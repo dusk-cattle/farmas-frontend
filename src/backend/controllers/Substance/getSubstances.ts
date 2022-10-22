@@ -1,7 +1,6 @@
 // types
 import axios from "axios";
 import { Connections } from "../../enums/connections";
-
 import { SubstanceProps } from "./types";
 
 export async function GetSubstances(): Promise<SubstanceProps> {
