@@ -53,7 +53,7 @@ export function LoginPage() {
     const success = await login({ email, password });
 
     if (success) navigate(Routes.ROOT);
-    else toast('Não foi possível realizar o login');
+    else toast('Não foi possível realizar o login', 'error');
 
     setLoading(false);
   }

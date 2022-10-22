@@ -22,6 +22,8 @@ import {
   BackIcon,
   Title,
   Form,
+  InputContainer,
+  CloseIcon,
   PlusIcon,
   SubmitButton,
 } from './styles';
@@ -32,7 +34,9 @@ import { CreateAnalysisProps } from './types';
 export function CreateAnalysis(props: CreateAnalysisProps) {
   const { onClickBack } = props;
 
-  const { handleSubmit, register, formState } = useForm({ mode: 'onChange' });
+  const { handleSubmit, register, formState, unregister } = useForm({
+    mode: 'onChange',
+  });
 
   const [allSubstances, setAllSubstances] = useState<Substance[]>([]);
 
@@ -43,7 +47,7 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
       const susbtances = await getSubstances();
 
       if (!susbtances.length)
-        return toast('Não foi possível carregar as substâncias');
+        return toast('Não foi possível carregar as substâncias', 'error');
       setAllSubstances(susbtances);
     })();
   }, [toast]);
@@ -63,7 +67,13 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
   async function createAnalysis(data: Record<string, number>) {
     try {
       await postAnalysis(data);
-    } catch (e) {}
+
+      toast('Análise enviada com sucesso!', 'success');
+
+      onClickBack?.();
+    } catch (e) {
+      toast('Ocorreu um erro para enviar a análise', 'error');
+    }
   }
 
   return (
@@ -77,16 +87,33 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
 
       <Form onSubmit={handleSubmit(createAnalysis)}>
         {selectedSubstances.map((substance) => (
-          <Input
-            {...register(substance.id, { required: true })}
-            key={substance.id}
-            name={substance.id}
-            label={substance.name}
-            unit={substance.unit}
-            type="substance"
-            info={substance.description}
-            placeholder="Digite aqui"
-          />
+          <InputContainer key={substance.id}>
+            <Input
+              {...register(substance.id, { required: true })}
+              key={substance.id}
+              name={substance.id}
+              label={substance.name}
+              unit={substance.unit}
+              type="substance"
+              info={substance.description}
+              placeholder="Digite aqui"
+              className="substance-input"
+            />
+
+            <CloseIcon
+              onClick={() => {
+                setSelectedSubstances((prev) => {
+                  const newSelectedSubstances = [...prev];
+
+                  unregister(substance.id);
+
+                  return newSelectedSubstances.filter(
+                    ({ id }) => substance.id !== id
+                  );
+                });
+              }}
+            />
+          </InputContainer>
         ))}
 
         {showSelector && (

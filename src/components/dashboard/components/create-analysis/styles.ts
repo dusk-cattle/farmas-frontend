@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 // components
 import { FaChevronLeft, FaPlusCircle } from 'react-icons/fa';
+import { MdOutlineClose } from 'react-icons/md';
 
 export const Container = styled.div`
   width: 100%;
@@ -62,6 +63,25 @@ export const PlusIcon = styled(FaPlusCircle)`
   margin: 0 auto;
 
   color: ${({ theme }) => theme.primary};
+`;
+
+export const CloseIcon = styled(MdOutlineClose)`
+  height: 1.25rem;
+  width: 1.25rem;
+  margin-left: -1rem;
+
+  color: ${({ theme }) => theme.foreground};
+  transform: translateX(0.75rem);
+`;
+
+export const InputContainer = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  > .substance-input {
+    width: 100%;
+  }
 `;
 
 export const SubmitButton = styled.button`

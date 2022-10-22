@@ -1,5 +1,10 @@
 export type SubstanceProps = {
+  description: string;
   id: string;
+  maxValue: number;
+  method: string;
+  minValue: number;
   name: string;
-  property1: number;
+  unit: string;
+  version: number;
 }[];

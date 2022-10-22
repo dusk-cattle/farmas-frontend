@@ -1,4 +1,9 @@
+// deps
+import { useEffect } from 'react';
 import ReactHighcharts from 'react-highcharts';
+
+// usecases
+import { getChartData } from '../../../../usecases';
 
 const chartConfig: Highcharts.Options = {
   chart: {
@@ -16,5 +21,9 @@ const chartConfig: Highcharts.Options = {
 };
 
 export function Chart() {
+  useEffect(() => {
+    getChartData();
+  }, []);
+
   return <ReactHighcharts config={chartConfig} />;
 }
