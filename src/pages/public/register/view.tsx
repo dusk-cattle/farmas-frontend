@@ -60,8 +60,8 @@ export function RegisterPage() {
       const logged = await login({ email, password });
 
       if (logged) navigate(Routes.ROOT);
-      else toast('Não foi possível realizar o login');
-    } else toast('Não foi possível registrar o usuário');
+      else toast('Não foi possível realizar o login', 'error');
+    } else toast('Não foi possível registrar o usuário', 'error');
 
     setLoading(false);
   }

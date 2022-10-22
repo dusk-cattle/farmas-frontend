@@ -1,5 +1,5 @@
 // deps
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { RiEyeLine, RiEyeCloseLine } from 'react-icons/ri';
 import { MdInfoOutline } from 'react-icons/md';
 
@@ -10,6 +10,7 @@ export const Container = styled.div<ContainerProps>`
   height: 3rem;
   padding: 0 1rem;
 
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -76,4 +77,31 @@ export const InfoIcon = styled(MdInfoOutline)`
   min-height: 1rem;
 
   color: ${({ theme }) => theme.foreground};
+`;
+
+const infoBalloonAnimation = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+export const InfoBalloon = styled.div`
+  top: 1.5rem;
+  right: 1.5rem;
+  padding: 0.75rem 1rem;
+  z-index: 10;
+
+  position: absolute;
+
+  border-radius: 1rem;
+  border-top-right-radius: 0;
+  border: 1px solid ${({ theme }) => theme.border};
+  background: #eee;
+  color: ${({ theme }) => theme.foreground};
+
+  animation-name: ${infoBalloonAnimation};
+  animation-duration: 0.3s;
 `;

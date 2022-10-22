@@ -42,7 +42,7 @@ export function Dashboard() {
           </FarmContainer>
         </Map>
 
-        {/* <Chart /> */}
+        <Chart />
       </Body>
 
       <CreateAnalysisButton onClick={() => setCreatingAnalysis(true)}>

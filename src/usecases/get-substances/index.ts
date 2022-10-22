@@ -10,7 +10,7 @@ export async function getSubstances(): Promise<Substance[]> {
   return response.map<Substance>((substance) => ({
     id: substance.id,
     name: substance.name,
-    unit: 'm/s',
-    description: 'Lorem ipsum dolor sit amet.',
+    unit: substance.unit,
+    description: substance.description,
   }));
 }
