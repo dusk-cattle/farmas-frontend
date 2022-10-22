@@ -24,6 +24,6 @@ export async function PostAnalysis(analysis: Analysis, isOnline: Boolean) {
          return true;
       }
    } catch (error) {
-      return false;
+      throw new Error("Error while trying to submit analysis");
    }
 }
