@@ -29,7 +29,7 @@ type Data = {
 }[];
 
 export async function getChartData(): Promise<ChartModel> {
-  const data: Data = ((await GetAnalysis()) as any).data;
+  const data: Data = (await GetAnalysis()) as any;
 
   const chartData: ChartModel = {};
 

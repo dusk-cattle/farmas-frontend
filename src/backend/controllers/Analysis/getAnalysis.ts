@@ -1,9 +1,9 @@
 import axios from "axios";
-import { Analysis, SubstanceAnalysisModel } from "./types";
+import { AnalysisProps } from "./types";
 import { LocalData } from "../../enums/localData";
 import { Connections } from "../../enums/connections";
 
-export async function GetAnalysis() {
+export async function GetAnalysis(): Promise<AnalysisProps> {
    try {
       const item = localStorage.getItem("user");
       var token = " ";
@@ -15,9 +15,9 @@ export async function GetAnalysis() {
             Authorization: "Bearer " + token,
          },
       };
-      const response = await axios.get<SubstanceAnalysisModel>(Connections.FARMAS + "/SoilAnalysis", config);
-      return response;
+      const response = await axios.get(Connections.FARMAS + "/SoilAnalysis", config);
+      return response.data;
    } catch (error) {
-      return [];
+      throw new Error();
    }
 }
