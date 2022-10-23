@@ -1,6 +1,9 @@
 // deps
 import { useState } from 'react';
 
+// usecases
+import { logout } from '../../usecases';
+
 // components
 import { Chart, CreateAnalysis } from './components';
 
@@ -16,6 +19,7 @@ import {
   EmptyDescription,
   CreateAnalysisButton,
   FileIcon,
+  LogoutIcon,
 } from './styles';
 
 export function Dashboard() {
@@ -24,12 +28,23 @@ export function Dashboard() {
   if (creatingAnalysis)
     return <CreateAnalysis onClickBack={() => setCreatingAnalysis(false)} />;
 
+  async function handleLogoutButton() {
+    try {
+      await logout();
+      // eslint-disable-next-line no-restricted-globals
+      location.reload();
+    } catch (error) {}
+  }
+
   return (
     <Container>
       <Body>
         <Map>
           <Header>
-            <Title>Fazenda Feliz</Title>
+            <Title>
+              Fazenda Feliz
+              <LogoutIcon onClick={handleLogoutButton} />
+            </Title>
           </Header>
 
           <FarmContainer>

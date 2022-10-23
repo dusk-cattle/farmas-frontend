@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 // components
 import { AiOutlineFileAdd } from 'react-icons/ai';
+import { TbLogout } from 'react-icons/tb';
 
 export const Container = styled.div`
   height: 100vh;
@@ -30,15 +31,20 @@ export const Map = styled.div`
 `;
 
 export const Header = styled.header`
+  width: -webkit-fill-available;
   padding: 1rem;
 
   display: flex;
   align-items: center;
+  position: fixed;
 `;
 
 export const Title = styled.h1`
-  top: 1rem;
-  position: fixed;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   font-size: 1.25rem;
   color: ${({ theme }) => theme.background};
@@ -90,5 +96,13 @@ export const FileIcon = styled(AiOutlineFileAdd)`
   width: 2rem;
   height: 2rem;
 
+  color: white;
+`;
+
+export const LogoutIcon = styled(TbLogout)`
+  width: 2rem;
+  height: 2rem;
+
+  cursor: pointer;
   color: white;
 `;
