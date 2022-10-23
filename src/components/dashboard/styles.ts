@@ -15,11 +15,13 @@ export const Container = styled.div`
 `;
 
 export const Body = styled.div`
-  overflow: scroll;
+  overflow: auto;
+  padding-bottom: 7rem;
 `;
 
 export const Map = styled.div`
   height: 18rem;
+  margin-bottom: 1rem;
 
   background-color: ${({ theme }) => theme.primary};
   border-radius: 0 0 2rem 2rem;
@@ -73,13 +75,15 @@ export const CreateAnalysisButton = styled.button`
   height: 4rem;
   margin: 2rem;
   margin-top: auto;
-  border-radius: 50rem;
+  bottom: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
 
   background-color: ${({ theme }) => theme.secondary};
+  border-radius: 50rem;
 `;
 
 export const FileIcon = styled(AiOutlineFileAdd)`
