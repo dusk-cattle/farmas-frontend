@@ -1,3 +1,4 @@
+export { associateWorker } from './associate-worker';
 export { createUser } from './create-user';
 export { getChartData } from './get-chart-data';
 export { getSession } from './get-session';

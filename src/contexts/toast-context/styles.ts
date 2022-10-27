@@ -22,7 +22,7 @@ const animation = keyframes`
 export const Container = styled.div<ContainerProps>`
   top: 0;
   left: 0;
-  width: calc(100% - 4rem);
+  width: 100%;
   padding: 2rem;
 
   position: absolute;

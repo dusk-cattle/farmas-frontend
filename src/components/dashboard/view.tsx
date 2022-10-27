@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { logout } from '../../usecases';
 
 // components
-import { Chart, CreateAnalysis } from './components';
+import { AddWorker, Chart, CreateAnalysis } from './components';
 
 // styles
 import {
@@ -17,16 +17,21 @@ import {
   FarmContainer,
   EmptyTitle,
   EmptyDescription,
-  CreateAnalysisButton,
+  Footer,
   FileIcon,
+  AddWorkerIcon,
   LogoutIcon,
 } from './styles';
 
 export function Dashboard() {
   const [creatingAnalysis, setCreatingAnalysis] = useState(false);
+  const [addingWorker, setAddingWorker] = useState(false);
 
   if (creatingAnalysis)
     return <CreateAnalysis onClickBack={() => setCreatingAnalysis(false)} />;
+
+  if (addingWorker)
+    return <AddWorker onClickBack={() => setAddingWorker(false)} />;
 
   async function handleLogoutButton() {
     try {
@@ -60,9 +65,10 @@ export function Dashboard() {
         <Chart />
       </Body>
 
-      <CreateAnalysisButton onClick={() => setCreatingAnalysis(true)}>
-        <FileIcon />
-      </CreateAnalysisButton>
+      <Footer>
+        <FileIcon onClick={() => setCreatingAnalysis(true)} />
+        <AddWorkerIcon onClick={() => setAddingWorker(true)} />
+      </Footer>
     </Container>
   );
 }

@@ -1,8 +1,8 @@
 // deps
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 // components
-import { AiOutlineFileAdd } from 'react-icons/ai';
+import { AiOutlineFileAdd, AiOutlineUserAdd } from 'react-icons/ai';
 import { TbLogout } from 'react-icons/tb';
 
 export const Container = styled.div`
@@ -11,6 +11,7 @@ export const Container = styled.div`
 
   display: flex;
   flex-direction: column;
+  position: relative;
 
   background-color: ${({ theme }) => theme.background};
 `;
@@ -76,27 +77,33 @@ export const EmptyDescription = styled.p`
   color: white;
 `;
 
-export const CreateAnalysisButton = styled.button`
-  width: 4rem;
-  height: 4rem;
-  margin: 2rem;
-  margin-top: auto;
+export const Footer = styled.footer`
+  width: 100vw;
+  padding: 1rem 1.5rem;
+  left: 0;
   bottom: 0;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: absolute;
+  display: flex;
+  justify-content: space-between;
 
-  background-color: ${({ theme }) => theme.secondary};
-  border-radius: 50rem;
+  box-shadow: 0 2.5rem 3rem ${({ theme }) => theme.foreground};
 `;
 
-export const FileIcon = styled(AiOutlineFileAdd)`
+const footerIconStyle = css`
   width: 2rem;
   height: 2rem;
 
-  color: white;
+  color: ${({ theme }) => theme.foreground};
+  opacity: 0.7;
+`;
+
+export const FileIcon = styled(AiOutlineFileAdd)`
+  ${footerIconStyle}
+`;
+
+export const AddWorkerIcon = styled(AiOutlineUserAdd)`
+  ${footerIconStyle}
 `;
 
 export const LogoutIcon = styled(TbLogout)`
