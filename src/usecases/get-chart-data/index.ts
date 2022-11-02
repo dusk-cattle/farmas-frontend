@@ -4,32 +4,8 @@ import { GetAnalysis } from '../../backend';
 // models
 import { ChartModel } from '../../models';
 
-type Data = {
-  farmId: string;
-  id: string;
-  operatorId: string;
-  substance: {
-    id: string;
-    soilAnalysisId: string;
-    substanceRegistry: {
-      description: string;
-      id: string;
-      maxValue: number;
-      method: string;
-      minValue: number;
-      name: string;
-      unit: string;
-      version: number;
-    };
-    substanceRegistryId: string;
-    timestamp: string;
-    value: number;
-  }[];
-  timestamp: string;
-}[];
-
 export async function getChartData(): Promise<ChartModel> {
-  const data: Data = (await GetAnalysis()) as any;
+  const data = await GetAnalysis();
 
   const chartData: ChartModel = {};
 

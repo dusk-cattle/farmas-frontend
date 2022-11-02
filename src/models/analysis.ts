@@ -1,3 +1,6 @@
-export type Analisys = {
-  [substanceID in string]: number;
-};
+export interface Analysis {
+  substances: {
+    [substanceID in string]: number;
+  };
+  timestamp: Date;
+}

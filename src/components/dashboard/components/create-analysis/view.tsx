@@ -29,14 +29,35 @@ import {
 } from './styles';
 
 // types
-import { CreateAnalysisProps } from './types';
+import { CreateAnalysisProps, FormData } from './types';
+
+const birthDateFormat = /[0-9]{2}\.[0-9]{2}\.[0-9]{4}/g;
+
+function formatToDate(value: string, separator: string = '.') {
+  const filteredValue = value.replace(/[^0-9]/g, '');
+  const cuttedValue = filteredValue.substring(0, 8);
+
+  const daySlice = cuttedValue.slice(0, 2);
+  const monthSlice = cuttedValue.slice(2, 4);
+  const yearSlice = cuttedValue.slice(4, 8);
+
+  const slices: string[] = [];
+  if (daySlice !== '') slices.push(daySlice);
+  if (monthSlice !== '') slices.push(monthSlice);
+  if (yearSlice !== '') slices.push(yearSlice);
+
+  const formattedDate = slices.join(separator);
+
+  return formattedDate;
+}
 
 export function CreateAnalysis(props: CreateAnalysisProps) {
   const { onClickBack } = props;
 
-  const { handleSubmit, register, formState, unregister } = useForm({
-    mode: 'onChange',
-  });
+  const { handleSubmit, register, formState, unregister, trigger } =
+    useForm<FormData>({
+      mode: 'onChange',
+    });
 
   const [allSubstances, setAllSubstances] = useState<Substance[]>([]);
 
@@ -64,9 +85,16 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
 
   const [showSelector, setShowSelector] = useState(false);
 
-  async function createAnalysis(data: Record<string, number>) {
+  async function createAnalysis(data: FormData) {
     try {
-      await postAnalysis(data);
+      const { timestamp, ...substances } = data;
+
+      const [month, day, year] = timestamp.split('.');
+
+      await postAnalysis({
+        substances,
+        timestamp: new Date([day, month, year].join('.')),
+      });
 
       toast('Análise enviada com sucesso!', 'success');
 
@@ -74,6 +102,19 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
     } catch (e) {
       toast('Ocorreu um erro para enviar a análise', 'error');
     }
+  }
+
+  function validateTimestampInput(value: string) {
+    return !!value.match(birthDateFormat)?.length;
+  }
+
+  function handleTimestampChange(event: any) {
+    const inputValue: string = event?.target?.value || '';
+    const formattedDate = formatToDate(inputValue);
+
+    event.target.value = formattedDate;
+
+    trigger('birthDate');
   }
 
   return (
@@ -86,6 +127,17 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
       </Header>
 
       <Form onSubmit={handleSubmit(createAnalysis)}>
+        <Input
+          {...register('timestamp', {
+            required: true,
+            validate: validateTimestampInput,
+          })}
+          name="timestamp"
+          label="Data"
+          placeholder="DD.MM.AAAA"
+          onChange={handleTimestampChange}
+        />
+
         {selectedSubstances.map((substance) => (
           <InputContainer key={substance.id}>
             <Input

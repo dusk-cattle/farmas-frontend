@@ -2,22 +2,22 @@
 import { PostAnalysis } from '../../backend';
 
 // models
-import { Analisys } from '../../models';
+import { Analysis } from '../../models';
 
 interface AnalysisFromBackend {
   Substances: {
     SubstanceRegistryId: string;
     Value: number;
-    Timestamp: Date;
+    Timestamp: any;
   }[];
 }
 
-export async function postAnalysis(data: Analisys): Promise<void> {
+export async function postAnalysis(data: Analysis): Promise<void> {
   const parsedAnalysis: AnalysisFromBackend = { Substances: [] };
 
-  const Timestamp = new Date();
+  const Timestamp = data.timestamp as any;
 
-  Object.entries(data).forEach(([substanceID, value]) => {
+  Object.entries(data.substances).forEach(([substanceID, value]) => {
     parsedAnalysis.Substances.push({
       SubstanceRegistryId: substanceID,
       Value: value,

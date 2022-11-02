@@ -56,6 +56,7 @@ export const Input = forwardRef((props: InputProps, ref: any) => {
       <Label htmlFor={rest.id}>{label}</Label>
       <input
         ref={ref}
+        step="any"
         {...rest}
         type={
           showPassword
