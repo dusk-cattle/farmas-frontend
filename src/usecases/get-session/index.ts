@@ -5,7 +5,11 @@ import { GetSession } from '../../backend';
 import { Session } from '../../models';
 
 export async function getSession(): Promise<Session | null> {
-  const response = await GetSession();
+  try {
+    const response = await GetSession();
 
-  return response as Session | null;
+    return response as Session | null;
+  } catch (e) {
+    return null;
+  }
 }
