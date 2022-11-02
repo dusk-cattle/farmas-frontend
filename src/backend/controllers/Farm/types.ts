@@ -1,14 +1,13 @@
 import { ECompassRose } from "./enums";
 
+interface Coordinates {
+   hours: number;
+   minutes: number;
+   seconds: number;
+   direction: number;
+}
+
 export interface Point {
-   Id: string;
-   FarmId: string;
-   LatitudeHours: number;
-   LatitudeMinutes: number;
-   LatitudeSeconds: number;
-   LatitudeDirection: ECompassRose;
-   LongitudeHours: number;
-   LongitudeMinutes: number;
-   LongitudeSeconds: number;
-   LongitudeDirection: ECompassRose;
+   latitude: Coordinates;
+   longitude: Coordinates;
 }
