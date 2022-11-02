@@ -18,6 +18,6 @@ export async function GetAnalysis(): Promise<AnalysisProps> {
       const response = await axios.get(Connections.FARMAS + "/SoilAnalysis", config);
       return response.data;
    } catch (error) {
-      throw new Error();
+      throw new Error("Error while retrieving Analysis");
    }
 }

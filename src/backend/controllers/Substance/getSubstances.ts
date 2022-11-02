@@ -18,6 +18,6 @@ export async function GetSubstances(): Promise<SubstanceProps> {
       const response = await axios.get(Connections.FARMAS + "/SubstanceRegistry", config);
       return response.data;
    } catch (error) {
-      return [];
+      throw new Error("Error while retrieving Substances");
    }
 }

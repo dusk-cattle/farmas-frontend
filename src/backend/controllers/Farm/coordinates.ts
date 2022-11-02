@@ -19,6 +19,6 @@ export async function GetCoordinates() {
       const response = await axios.get<Point>(Connections.FARMAS + "/Size", config);
       return response.data;
    } catch (error) {
-      return [];
+      throw new Error("Error while retrieving Farm coordinates");
    }
 }

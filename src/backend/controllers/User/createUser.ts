@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Connections } from "../../enums";
 import { CreateUserProps } from "./types";
 
@@ -7,7 +7,13 @@ export async function CreateUser(props: CreateUserProps) {
       const response = await axios.post(Connections.GATEKEEPER + "/User", props);
       return response.data;
    } catch (error) {
-      console.log(error);
-      return false;
+      const err = error as AxiosError;
+      if (err.response) {
+         if (err.response.status === 403) {
+            throw new Error("This user is already registered");
+         } else {
+            throw new Error("Something went wrong while creating user");
+         }
+      }
    }
 }
