@@ -18,6 +18,8 @@ export async function getChartData(): Promise<ChartModel> {
         new Date(substance.timestamp).getTime(),
         substance.value,
       ]);
+
+      chartData[substance.substanceRegistry.name].sort((a, b) => a[0] - b[0]);
     });
   });
 

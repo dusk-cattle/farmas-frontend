@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { logout } from '../../usecases';
 
 // components
-import { AddWorker, Chart, CreateAnalysis } from './components';
+import { AddWorker, Chart, CreateAnalysis, FarmMap } from './components';
 
 // styles
 import {
@@ -15,8 +15,6 @@ import {
   Header,
   Title,
   FarmContainer,
-  EmptyTitle,
-  EmptyDescription,
   Footer,
   FileIcon,
   AddWorkerIcon,
@@ -53,12 +51,7 @@ export function Dashboard() {
           </Header>
 
           <FarmContainer>
-            <EmptyTitle>Nada para exibir</EmptyTitle>
-            <EmptyDescription>
-              Não há dados suficientes para
-              <br />
-              exibir sua fazenda
-            </EmptyDescription>
+            <FarmMap />
           </FarmContainer>
         </Map>
 

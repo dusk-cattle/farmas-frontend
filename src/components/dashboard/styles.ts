@@ -25,15 +25,17 @@ export const Map = styled.div`
   height: 18rem;
   margin-bottom: 1rem;
 
-  background-color: ${({ theme }) => theme.primary};
-  border-radius: 0 0 2rem 2rem;
   display: flex;
   flex-direction: column;
+
+  background-color: ${({ theme }) => theme.primary};
+  border-radius: 0 0 2rem 2rem;
 `;
 
 export const Header = styled.header`
   width: -webkit-fill-available;
   padding: 1rem;
+  z-index: 10;
 
   display: flex;
   align-items: center;
@@ -59,22 +61,6 @@ export const FarmContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
-
-export const EmptyTitle = styled.p`
-  margin: 0;
-
-  font-size: 1.25rem;
-  color: white;
-`;
-
-export const EmptyDescription = styled.p`
-  margin: 0;
-  margin-top: 0.5rem;
-
-  text-align: center;
-  font-size: 0.75rem;
-  color: white;
 `;
 
 export const Footer = styled.footer`

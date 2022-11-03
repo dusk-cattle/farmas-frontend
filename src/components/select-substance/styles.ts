@@ -77,7 +77,7 @@ export const ArrowIcon = styled(FiChevronDown)<ArrowIconProps>`
 `;
 
 export const DropBox = styled.div`
-  width: calc(100% - 2rem);
+  width: calc(100% + 2px);
   max-height: 16rem;
   left: -1px;
   top: calc(3rem - 1px);
