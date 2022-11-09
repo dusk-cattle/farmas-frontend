@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 // components
 import { AiOutlineFileAdd, AiOutlineUserAdd } from 'react-icons/ai';
-import { TbLogout } from 'react-icons/tb';
+import { TbLogout, TbFileAnalytics } from 'react-icons/tb';
 
 export const Container = styled.div`
   height: 100vh;
@@ -72,6 +72,7 @@ export const Footer = styled.footer`
   position: absolute;
   display: flex;
   justify-content: space-between;
+  gap: 2rem;
 
   box-shadow: 0 2.5rem 3rem ${({ theme }) => theme.foreground};
 `;
@@ -85,10 +86,22 @@ const footerIconStyle = css`
 `;
 
 export const FileIcon = styled(AiOutlineFileAdd)`
-  ${footerIconStyle}
+  width: 4rem;
+  height: 4rem;
+  margin-top: -2rem;
+  margin-right: auto;
+  padding: 1rem;
+
+  color: white;
+  background: ${({ theme }) => theme.secondary};
+  border-radius: 50rem;
 `;
 
 export const AddWorkerIcon = styled(AiOutlineUserAdd)`
+  ${footerIconStyle}
+`;
+
+export const ReportsIcon = styled(TbFileAnalytics)`
   ${footerIconStyle}
 `;
 

@@ -5,6 +5,9 @@ import ReactHighcharts from 'react-highcharts';
 // usecases
 import { getChartData } from '../../../../usecases';
 
+// types
+import { EmptyContainer, EmptyIllustration } from './styles';
+
 const chartConfig: Highcharts.Options = {
   chart: {
     spacingLeft: 12,
@@ -77,6 +80,14 @@ export function Chart() {
       );
     })();
   }, []);
+
+  if (!series?.length)
+    return (
+      <EmptyContainer>
+        <EmptyIllustration />
+        Sem dados para exibir
+      </EmptyContainer>
+    );
 
   return <ReactHighcharts config={{ ...chartConfig, series }} />;
 }

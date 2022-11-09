@@ -1,0 +1,1 @@
+export { ShowReports } from './view';
