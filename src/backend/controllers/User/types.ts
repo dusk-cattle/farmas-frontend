@@ -11,6 +11,7 @@ export interface CreateUserProps {
 export interface LoginProps {
    email: string;
    password: string;
+   resourceId?: string;
 }
 
 export interface LoginResponse {

@@ -32,6 +32,8 @@ export function ShowReports(props: ShowReportsProps) {
         </BackButton>
         <Title>Relatórios</Title>
       </Header>
+
+      {reports && reports.map(report => <div>{report.id}</div>)}
     </Container>
   );
 }

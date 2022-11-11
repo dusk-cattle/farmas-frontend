@@ -5,6 +5,9 @@ import { LoginProps, LoginResponse } from "./types";
 
 export async function Login(props: LoginProps) {
    try {
+      // mocked resourceId.
+      props.resourceId = "1ba8dbf5-294a-486a-9c4b-88d384f7f12c";
+
       const response = await axios.post<LoginResponse>(Connections.GATEKEEPER + "/Session", props);
       localStorage.setItem("user", JSON.stringify(response.data));
 

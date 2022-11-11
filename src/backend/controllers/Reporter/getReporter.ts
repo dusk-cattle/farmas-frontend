@@ -14,6 +14,7 @@ export async function GetReporter(): Promise<ReporterProps[]> {
             Authorization: "Bearer " + token,
          },
       };
+
       const response = await axios.get(Connections.REPORTER + "/SoilReports", config);
       return response.data;
    } catch (error) {

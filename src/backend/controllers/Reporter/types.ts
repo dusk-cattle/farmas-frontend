@@ -5,3 +5,16 @@ export interface ReporterProps {
    reportType: string;
    createdAt: string;
 }
+
+export interface CreateCommentProps {
+    content: string;
+    reportId: string;
+}
+
+export interface Comment {
+    id: string;
+    authorId: string;
+    content: string;
+    reportId: string;
+    createdAt: Date;
+}
