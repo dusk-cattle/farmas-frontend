@@ -4,17 +4,18 @@ export interface ReporterProps {
    content: string;
    reportType: string;
    createdAt: string;
+   status: string;
 }
 
 export interface CreateCommentProps {
-    content: string;
-    reportId: string;
+   content: string;
+   reportId: string;
 }
 
 export interface Comment {
-    id: string;
-    authorId: string;
-    content: string;
-    reportId: string;
-    createdAt: Date;
+   id: string;
+   authorId: string;
+   content: string;
+   reportId: string;
+   createdAt: Date;
 }

@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { Connections } from "../../enums/connections";
+import { mockReports } from "./mock";
 import { ReporterProps } from "./types";
 
 export async function GetReporter(): Promise<ReporterProps[]> {
@@ -14,10 +15,10 @@ export async function GetReporter(): Promise<ReporterProps[]> {
             Authorization: "Bearer " + token,
          },
       };
-
-      const response = await axios.get(Connections.REPORTER + "/SoilReports", config);
-      return response.data;
+      return mockReports();
+      // const response = await axios.get(Connections.REPORTER + "/SoilReports", config);
+      // return response.data;
    } catch (error) {
-      throw new Error("Error while retrieving Farm coordinates");
+      throw new Error("Error while retrieving farm");
    }
 }
