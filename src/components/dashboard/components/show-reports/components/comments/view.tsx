@@ -72,7 +72,7 @@ export function Comments({ reportId }: { reportId: string }) {
           <CommentContainer key={index}>
             <CommentItem isOwn={comment.authorId == data?.user.id} key={index}>
               <AuthorName isOwn={comment.authorId == data?.user.id}>
-                {comment.authorId.substring(0, 8)}
+                {comment.authorName}
               </AuthorName>
 
               <p>{comment.content}</p>
