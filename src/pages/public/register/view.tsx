@@ -66,10 +66,6 @@ export function RegisterPage() {
     setLoading(false);
   }
 
-  console.log('campos sujos', formState.dirtyFields);
-  console.log('está sujo', formState.isDirty);
-  console.log('é válido', formState.isValid);
-
   return (
     <Container onSubmit={handleSubmit(signIn)}>
       <Banner>

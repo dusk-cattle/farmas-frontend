@@ -1,5 +1,6 @@
 // deps
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { SessionContext } from '../../contexts';
 
 // usecases
 import { logout } from '../../usecases';
@@ -12,6 +13,9 @@ import {
   CreateAnalysis,
   FarmMap,
 } from './components';
+
+// enums
+import { Roles } from '../../enums';
 
 // styles
 import {
@@ -32,6 +36,8 @@ export function Dashboard() {
   const [creatingAnalysis, setCreatingAnalysis] = useState(false);
   const [addingWorker, setAddingWorker] = useState(false);
   const [showingReports, setShowingReports] = useState(false);
+
+  const { data } = useContext(SessionContext);
 
   if (creatingAnalysis)
     return <CreateAnalysis onClickBack={() => setCreatingAnalysis(false)} />;
@@ -56,7 +62,7 @@ export function Dashboard() {
         <Map>
           <Header>
             <Title>
-              Fazenda Feliz
+              {data?.resource.name}
               <LogoutIcon onClick={handleLogoutButton} />
             </Title>
           </Header>
@@ -72,7 +78,9 @@ export function Dashboard() {
       <Footer>
         <FileIcon onClick={() => setCreatingAnalysis(true)} />
         <ReportsIcon onClick={() => setShowingReports(true)} />
-        <AddWorkerIcon onClick={() => setAddingWorker(true)} />
+        {data?.role === Roles.OWNER && (
+          <AddWorkerIcon onClick={() => setAddingWorker(true)} />
+        )}
       </Footer>
     </Container>
   );
