@@ -12,36 +12,38 @@ export function FarmMap() {
 
   useEffect(() => {
     (async () => {
-      const shape = await getFarmShape();
+      try {
+        const shape = await getFarmShape();
 
-      const minX = shape.reduce(
-        (min, value) => (value.x < min ? value.x : min),
-        Number.MAX_SAFE_INTEGER
-      );
-      const maxX = shape.reduce(
-        (max, value) => (value.x > max ? value.x : max),
-        Number.MIN_SAFE_INTEGER
-      );
+        const minX = shape.reduce(
+          (min, value) => (value.x < min ? value.x : min),
+          Number.MAX_SAFE_INTEGER
+        );
+        const maxX = shape.reduce(
+          (max, value) => (value.x > max ? value.x : max),
+          Number.MIN_SAFE_INTEGER
+        );
 
-      const minY = shape.reduce(
-        (min, value) => (value.y < min ? value.y : min),
-        Number.MAX_SAFE_INTEGER
-      );
-      const maxY = shape.reduce(
-        (max, value) => (value.y > max ? value.y : max),
-        Number.MIN_SAFE_INTEGER
-      );
+        const minY = shape.reduce(
+          (min, value) => (value.y < min ? value.y : min),
+          Number.MAX_SAFE_INTEGER
+        );
+        const maxY = shape.reduce(
+          (max, value) => (value.y > max ? value.y : max),
+          Number.MIN_SAFE_INTEGER
+        );
 
-      const normShape: FarmShape = [];
+        const normShape: FarmShape = [];
 
-      shape.forEach((value) => {
-        normShape.push({
-          x: (180 * (value.x - minX)) / (maxX - minX) + 10,
-          y: (180 * (value.y - minY)) / (maxY - minY) + 10,
+        shape.forEach((value) => {
+          normShape.push({
+            x: (180 * (value.x - minX)) / (maxX - minX) + 10,
+            y: (180 * (value.y - minY)) / (maxY - minY) + 10,
+          });
         });
-      });
 
-      setFarmShape(normShape);
+        setFarmShape(normShape);
+      } catch (e) {}
     })();
   }, []);
 

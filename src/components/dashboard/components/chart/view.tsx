@@ -70,14 +70,16 @@ export function Chart() {
 
   useEffect(() => {
     (async () => {
-      const chartData = await getChartData();
+      try {
+        const chartData = await getChartData();
 
-      setSeries(
-        Object.entries(chartData).map(([name, data]) => ({
-          name,
-          data,
-        }))
-      );
+        setSeries(
+          Object.entries(chartData).map(([name, data]) => ({
+            name,
+            data,
+          }))
+        );
+      } catch (e) {}
     })();
   }, []);
 
