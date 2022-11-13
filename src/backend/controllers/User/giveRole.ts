@@ -1,46 +1,43 @@
 import axios, { AxiosError } from "axios";
 import { Connections } from "../../enums";
+import { GetUserTokenFromStorage } from "../../utils";
 import { GiveRoleProps } from "./types";
 
 export async function GiveRole(giveRoleProps: GiveRoleProps) {
-  const item = localStorage.getItem("user");
-  if (!item) {
-    throw new Error("Something went wrong while retrieving data");
-  }
+   const token = GetUserTokenFromStorage();
+   if (token == " ") {
+      throw new Error("Erro ao recuperar dados");
+   }
+   const config = {
+      headers: {
+         Authorization: "Bearer " + token,
+      },
+   };
 
-  const token = JSON.parse(item)["token"];
-
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
-
-  try {
-    await axios.post(Connections.GATEKEEPER + "/Role", giveRoleProps, config);
-  } catch (error) {
-    handleGiveRoleError(error as AxiosError);
-  }
+   try {
+      await axios.post(Connections.GATEKEEPER + "/Role", giveRoleProps, config);
+   } catch (error) {
+      handleGiveRoleError(error as AxiosError);
+   }
 }
 
 function handleGiveRoleError(error: AxiosError) {
-  const status = error?.response?.status;
+   const status = error?.response?.status;
 
-  let message = "";
-  switch (status) {
-    case 401:
-      message = "User is not authenticated on, or does not owns the resource";
-      break;
+   let message = "";
+   switch (status) {
+      case 401:
+         message = "Usuário não autenticado, ou não possui uma fazenda";
+         break;
 
-    case 403:
-      message =
-        "The user who's role is being assigned to does not exist or the user has already a role in it";
-      break;
+      case 403:
+         message = "O usuário não existe ou ja existe uma função para ele"; //"The user who's role is being assigned to does not exist or the user has already a role in it";
+         break;
 
-    default:
-      message = "Generic error occurred";
-      break;
-  }
+      default:
+         message = "Erro genérico ocorreu";
+         break;
+   }
 
-  throw new Error(message);
+   throw new Error(message);
 }

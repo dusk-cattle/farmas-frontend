@@ -10,9 +10,9 @@ export async function CreateUser(props: CreateUserProps) {
       const err = error as AxiosError;
       if (err.response) {
          if (err.response.status === 403) {
-            throw new Error("This user is already registered");
+            throw new Error("Usuário já registrado");
          } else {
-            throw new Error("Something went wrong while creating user");
+            throw new Error("Erro ao criar usuário");
          }
       }
    }

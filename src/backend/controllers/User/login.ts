@@ -16,9 +16,9 @@ export async function Login(props: LoginProps) {
       const err = error as AxiosError;
       if (err.response) {
          if (err.response.status === 403) {
-            throw new Error("User does not exist");
+            throw new Error("Usuário não existe");
          } else if (err.response.status === 401) {
-            throw new Error("Password does not match");
+            throw new Error("Senha incorreta");
          }
       }
    }

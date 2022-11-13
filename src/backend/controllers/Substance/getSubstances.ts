@@ -1,15 +1,12 @@
 // types
 import axios from "axios";
 import { Connections } from "../../enums/connections";
+import { GetUserTokenFromStorage } from "../../utils";
 import { SubstanceProps } from "./types";
 
 export async function GetSubstances(): Promise<SubstanceProps> {
    try {
-      const item = localStorage.getItem("user");
-      var token = " ";
-      if (item != null) {
-         token = JSON.parse(item)["token"];
-      }
+      const token = GetUserTokenFromStorage();
       const config = {
          headers: {
             Authorization: "Bearer " + token,
@@ -18,6 +15,6 @@ export async function GetSubstances(): Promise<SubstanceProps> {
       const response = await axios.get(Connections.FARMAS + "/SubstanceRegistry", config);
       return response.data;
    } catch (error) {
-      throw new Error("Error while retrieving Substances");
+      throw new Error("Erro ao buscar substancias");
    }
 }
