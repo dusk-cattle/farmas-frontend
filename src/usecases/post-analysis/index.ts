@@ -1,8 +1,8 @@
 // backend
-import { PostAnalysis } from '../../backend';
+import { PostAnalysis } from "../../backend";
 
 // models
-import { Analysis } from '../../models';
+import { Analysis } from "../../models";
 
 interface AnalysisFromBackend {
   Substances: {

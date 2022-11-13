@@ -17,7 +17,7 @@ export async function GiveRole(giveRoleProps: GiveRoleProps) {
   };
 
   try {
-    await axios.post(Connections.GATEKEEPER + "/Role", config);
+    await axios.post(Connections.GATEKEEPER + "/Role", giveRoleProps, config);
   } catch (error) {
     handleGiveRoleError(error as AxiosError);
   }
