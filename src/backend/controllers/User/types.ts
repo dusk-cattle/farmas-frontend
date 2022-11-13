@@ -29,4 +29,5 @@ export interface GetSessionProps {
 export interface GiveRoleProps {
   role: string;
   thirdUserEmail: string;
+  resourceId?: string;
 }
