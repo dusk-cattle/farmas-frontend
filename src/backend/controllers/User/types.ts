@@ -31,3 +31,9 @@ export interface GiveRoleProps {
   thirdUserEmail: string;
   resourceId?: string;
 }
+
+export interface GetResourcesProps {
+  id: string;
+  name: string;
+  adminRole: string;
+}

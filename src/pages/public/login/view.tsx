@@ -27,6 +27,7 @@ import {
 
 // types
 import { FormData } from './types';
+import { GetResources } from '../../../backend';
 
 export function LoginPage() {
   const { register, handleSubmit, formState } = useForm<FormData>({
@@ -53,6 +54,10 @@ export function LoginPage() {
       const { email, password } = data;
 
       await login({ email, password });
+      const resources = await GetResources()
+
+      // Será que dá pra deixar o usuário escolher alguma dessas fazendas p logar?
+      console.log(resources);
 
       navigate(Routes.ROOT);
     } catch (error: any) {
