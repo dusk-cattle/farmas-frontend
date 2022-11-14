@@ -1,8 +1,17 @@
-import { useContext, useEffect, useState } from "react";
-import { CreateComment, GetComments } from "../../../../../../backend";
-import { Comment } from "../../../../../../backend/controllers/Reporter/types";
-import { SessionContext } from "../../../../../../contexts";
-import { Header, BackButton, BackIcon, Title, Body } from "../../styles";
+// deps
+import { useContext, useEffect, useState } from 'react';
+
+// models
+import { Comment } from '../../../../../../backend/controllers/Reporter/types';
+
+// usecases
+import { CreateComment, GetComments } from '../../../../../../backend';
+
+// contexts
+import { SessionContext } from '../../../../../../contexts';
+
+// styles
+import { Header, BackButton, BackIcon, Title } from '../../styles';
 import {
   CommentInputArea,
   ConversationSection,
@@ -13,13 +22,18 @@ import {
   SendIcon,
   AuthorName,
   CommentDateTime,
-} from "./styles";
+} from './styles';
+
+// types
+import { CommentsProps } from './types';
 
 interface ExtendedComment extends Comment {
   isOwn?: boolean;
 }
 
-export function Comments({ reportId }: { reportId: string }) {
+export function Comments(props: CommentsProps) {
+  const { reportID, onClickBack } = props;
+
   const { data } = useContext(SessionContext);
 
   const [currentComment, setCurrentComment] = useState<string>();
@@ -32,7 +46,7 @@ export function Comments({ reportId }: { reportId: string }) {
   }, []);
 
   async function RefreshComments() {
-    const fetchedComments: ExtendedComment[] = await GetComments(reportId);
+    const fetchedComments: ExtendedComment[] = await GetComments(reportID);
 
     const sanitizedComments = fetchedComments.map((fetchedComment) => {
       fetchedComment.isOwn = fetchedComment.id === data?.user.id;
@@ -47,20 +61,20 @@ export function Comments({ reportId }: { reportId: string }) {
   }
 
   async function createComment() {
-    if (!currentComment || currentComment === "") {
+    if (!currentComment || currentComment === '') {
       return;
     }
 
-    await CreateComment({ content: currentComment, reportId });
+    await CreateComment({ content: currentComment, reportId: reportID });
 
-    setCurrentComment("");
+    setCurrentComment('');
     RefreshComments();
   }
 
   return (
     <Container>
       <Header>
-        <BackButton>
+        <BackButton onClick={onClickBack}>
           <BackIcon />
         </BackButton>
 
@@ -70,8 +84,8 @@ export function Comments({ reportId }: { reportId: string }) {
       <ConversationSection>
         {comments.map((comment, index) => (
           <CommentContainer key={index}>
-            <CommentItem isOwn={comment.authorId == data?.user.id} key={index}>
-              <AuthorName isOwn={comment.authorId == data?.user.id}>
+            <CommentItem isOwn={comment.authorId === data?.user.id} key={index}>
+              <AuthorName isOwn={comment.authorId === data?.user.id}>
                 {comment.authorName}
               </AuthorName>
 

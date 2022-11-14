@@ -18,14 +18,12 @@ export async function getSession(): Promise<Session | null> {
             name: response.user.name,
             email: response.user.email,
           },
-          role: response.role as Roles,
-          resource: {
-            id: response.resource.id,
-            name: response.resource.name,
-          },
+          role: response.role as Roles | null,
+          resource: response.resource,
         }
       : null;
   } catch (e) {
+    console.log('lajsbdkhb');
     return null;
   }
 }

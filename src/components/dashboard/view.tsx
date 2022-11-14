@@ -62,8 +62,8 @@ export function Dashboard() {
         <Map>
           <Header>
             <Title>
-              {data?.resource.name}
               <LogoutIcon onClick={handleLogoutButton} />
+              {data?.resource?.name}
             </Title>
           </Header>
 

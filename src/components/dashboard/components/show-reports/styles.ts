@@ -1,10 +1,14 @@
 // deps
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 // components
+import { VscLoading } from 'react-icons/vsc';
 import { FaChevronLeft } from 'react-icons/fa';
 import { GoFilePdf } from 'react-icons/go';
 import { AiOutlineComment } from 'react-icons/ai';
+
+// assets
+import { emptyIllustration } from './assets';
 
 export const Container = styled.div`
   width: 100%;
@@ -84,4 +88,40 @@ export const CommentIcon = styled(AiOutlineComment)`
   margin-right: 0.5rem;
 
   color: ${({ theme }) => theme.foreground};
+`;
+
+export const EmptyContainer = styled.div`
+  height: 80%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const EmptyIllustration = styled.img.attrs({
+  src: emptyIllustration,
+})`
+  width: 10rem;
+  height: 10rem;
+`;
+
+const spin = keyframes`
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+    transform:rotate(360deg);
+  }
+`;
+
+export const Loading = styled(VscLoading)`
+  width: 4rem;
+  height: 4rem;
+
+  color: ${({ theme }) => theme.primary};
+  animation-name: ${spin};
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 `;

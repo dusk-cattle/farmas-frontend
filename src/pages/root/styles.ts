@@ -1,6 +1,5 @@
 // deps
 import styled, { keyframes } from 'styled-components';
-
 import { VscLoading } from 'react-icons/vsc';
 
 export const LoadingContainer = styled.div`

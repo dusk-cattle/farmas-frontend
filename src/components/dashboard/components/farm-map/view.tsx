@@ -7,8 +7,13 @@ import { FarmShape } from '../../../../models';
 // usecases
 import { getFarmShape } from '../../../../usecases';
 
+// styles
+import { UnemployedContainer } from './styles';
+
 export function FarmMap() {
   const [farmShape, setFarmShape] = useState<FarmShape>([]);
+
+  const [unemployed, setUnemployed] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -43,9 +48,19 @@ export function FarmMap() {
         });
 
         setFarmShape(normShape);
-      } catch (e) {}
+      } catch (e) {
+        setUnemployed(true);
+      }
     })();
   }, []);
+
+  if (unemployed)
+    return (
+      <UnemployedContainer>
+        <b>Não há fazenda para exibir</b>
+        <p>Entre em contato com o dono da fazenda e forneça seu e-mail</p>
+      </UnemployedContainer>
+    );
 
   function renderGrass() {
     const grass: JSX.Element[] = [];

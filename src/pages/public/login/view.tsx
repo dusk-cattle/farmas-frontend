@@ -49,11 +49,15 @@ export function LoginPage() {
   async function signIn(data: FormData) {
     setLoading(true);
 
-    const { email, password } = data;
-    const success = await login({ email, password });
+    try {
+      const { email, password } = data;
 
-    if (success) navigate(Routes.ROOT);
-    else toast('Não foi possível realizar o login', 'error');
+      await login({ email, password });
+
+      navigate(Routes.ROOT);
+    } catch (error: any) {
+      toast(error.message, 'error');
+    }
 
     setLoading(false);
   }

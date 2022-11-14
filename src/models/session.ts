@@ -3,6 +3,6 @@ import { Roles } from '../enums';
 
 export interface Session {
   user: { id: string; name: string; email: string };
-  resource: { id: string; name: string };
-  role: Roles;
+  resource: { id: string; name: string } | null;
+  role: Roles | null;
 }

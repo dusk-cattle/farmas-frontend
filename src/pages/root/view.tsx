@@ -3,7 +3,7 @@ import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // contexts
-import { SessionContext } from '../../contexts';
+import { SessionContext, ToastContext } from '../../contexts';
 
 // components
 import { Dashboard } from '../../components';
@@ -21,9 +21,16 @@ export function Root() {
     data: sessionData,
   } = useContext(SessionContext);
 
+  const { toast } = useContext(ToastContext);
+
   useEffect(() => {
-    fetchSession();
-  }, [fetchSession]);
+    try {
+      fetchSession();
+    } catch (error: any) {
+      console.log(error);
+      toast(error.message, 'error');
+    }
+  }, [fetchSession, toast]);
 
   const navigate = useNavigate();
 

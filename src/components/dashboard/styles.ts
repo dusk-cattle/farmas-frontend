@@ -47,6 +47,7 @@ export const Title = styled.h1`
 
   display: flex;
   justify-content: space-between;
+  flex-direction: row-reverse;
   align-items: center;
 
   font-size: 1.25rem;

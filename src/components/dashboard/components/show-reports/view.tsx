@@ -1,14 +1,15 @@
 // deps
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from 'react';
+import { ToastContext } from '../../../../contexts';
 
 // models
-import { Report } from "../../../../models";
+import { Report } from '../../../../models';
 
 // usecases
-import { getReports } from "../../../../usecases";
+import { getReports } from '../../../../usecases';
 
 // components
-import { Comments } from "./components";
+import { Comments } from './components';
 
 // styles
 import {
@@ -22,28 +23,92 @@ import {
   ReportContainer,
   PDFIcon,
   CommentIcon,
-} from "./styles";
+  EmptyContainer,
+  EmptyIllustration,
+  Loading,
+} from './styles';
 
 // types
-import { ShowReportsProps } from "./types";
+import { ShowReportsProps } from './types';
 
 export function ShowReports(props: ShowReportsProps) {
   const { onClickBack } = props;
 
   const [reports, setReports] = useState<Report[]>([]);
 
-  const [currentReport, setCurrentReport] = useState<string>("");
+  const [currentReport, setCurrentReport] = useState<string>('');
   const [currentHTML, setCurrentHTML] = useState<string>();
+
+  const [loading, setLoading] = useState(true);
+
+  const { toast } = useContext(ToastContext);
 
   useEffect(() => {
     (async () => {
-      setReports(await getReports());
+      try {
+        setReports(await getReports());
+      } catch (error: any) {
+        toast(error.message, 'error');
+      } finally {
+        setLoading(false);
+      }
     })();
   }, []);
 
   const [showComments, setShowComments] = useState(false);
 
-  if (showComments) return <Comments reportId={currentReport} />;
+  if (showComments)
+    return (
+      <Comments
+        reportID={currentReport}
+        onClickBack={() => setShowComments(false)}
+      />
+    );
+
+  function renderReports() {
+    if (loading)
+      return (
+        <Body>
+          <EmptyContainer>
+            <Loading />
+          </EmptyContainer>
+        </Body>
+      );
+
+    if (!reports.length)
+      return (
+        <Body>
+          <EmptyContainer>
+            <EmptyIllustration />
+            Você não possui relatórios ainda
+          </EmptyContainer>
+        </Body>
+      );
+
+    const reportCopmponents = reports.map((report, i) => {
+      const date = new Date(report.date).toLocaleDateString('pt-BR', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+
+      return (
+        <ReportContainer
+          key={i}
+          onClick={() => {
+            setCurrentHTML(report.html);
+            setCurrentReport(report.id);
+          }}
+        >
+          <PDFIcon />
+          {date}
+        </ReportContainer>
+      );
+    });
+
+    return <Body>{reportCopmponents}</Body>;
+  }
 
   return (
     <Container>
@@ -67,30 +132,7 @@ export function ShowReports(props: ShowReportsProps) {
           }
         />
       ) : (
-        <Body>
-          {!currentHTML &&
-            reports.map((report, i) => {
-              const date = new Date(report.date).toLocaleDateString("pt-BR", {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              });
-
-              return (
-                <ReportContainer
-                  key={i}
-                  onClick={() => {
-                    setCurrentHTML(report.html);
-                    setCurrentReport(report.id);
-                  }}
-                >
-                  <PDFIcon />
-                  {date}
-                </ReportContainer>
-              );
-            })}
-        </Body>
+        renderReports()
       )}
     </Container>
   );

@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { associateWorker } from '../../../../usecases';
 
 // contexts
-import { ToastContext } from '../../../../contexts';
+import { SessionContext, ToastContext } from '../../../../contexts';
 
 // components
 import { Input } from '../../..';
@@ -41,9 +41,11 @@ export function AddWorker(props: AddWorkerProps) {
 
   const { toast } = useContext(ToastContext);
 
+  const { data: sessionData } = useContext(SessionContext);
+
   async function addWorker(data: FormData) {
     try {
-      await associateWorker(data.email);
+      await associateWorker(data.email, sessionData?.resource?.id);
 
       toast('Operador adicionado com sucesso!', 'success');
 
