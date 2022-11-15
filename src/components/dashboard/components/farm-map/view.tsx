@@ -178,11 +178,59 @@ export function FarmMap() {
     return fence;
   }
 
+  function renderFlowers() {
+    const flowers: JSX.Element[] = [];
+
+    for (let i = 0; i < 5; i++) {
+      const x = Math.random() * 200;
+      const y = Math.random() * 200;
+
+      flowers.push(
+        <g key={i} fill="#ff9ef9">
+          <path
+            d={`M${x},${y} h-8`}
+            stroke="#287830"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <circle cx={x - 2} cy={y - 2} r={2.5} />
+          <circle cx={x - 2} cy={y + 2} r={2.5} />
+          <circle cx={x + 2} cy={y - 2} r={2.5} />
+          <circle cx={x + 2} cy={y + 2} r={2.5} />
+          <circle cx={x} cy={y} r={2} fill="#ffdd00" />
+        </g>
+      );
+    }
+
+    return flowers;
+  }
+
+  function renderBushs() {
+    const bushs: JSX.Element[] = [];
+
+    for (let i = 0; i < 5; i++) {
+      const x = Math.random() * 200;
+      const y = Math.random() * 200;
+
+      bushs.push(
+        <g key={i} fill="#287830">
+          <circle cx={x} cy={y} r={4} />
+          <circle cx={x - 4} cy={y - 6.5} r={4} />
+          <circle cx={x - 4} cy={y + 6.5} r={4} />
+          <path d={`M${x},${y} l-4,-6.5 h-4 v13 h4`} />
+        </g>
+      );
+    }
+
+    return bushs;
+  }
+
   return (
     <svg
       viewBox="0 0 200 200"
-      width={250}
-      height={300}
+      width={280}
+      height="100%"
       style={{ transform: 'rotate(-90deg)', overflow: 'visible' }}
     >
       <path
@@ -200,9 +248,11 @@ export function FarmMap() {
             : ''
         }`}
       />
+      {renderBushs()}
       {renderGrass()}
       {renderFence2()}
       {renderFence()}
+      {renderFlowers()}
     </svg>
   );
 }

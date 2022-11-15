@@ -7,7 +7,7 @@ import { TbLogout, TbFileAnalytics } from 'react-icons/tb';
 import { IconProps } from './types';
 
 export const Container = styled.div`
-  height: 100vh;
+  height: inherit;
   width: 100vw;
 
   display: flex;
@@ -19,7 +19,7 @@ export const Container = styled.div`
 
 export const Body = styled.div`
   overflow: auto;
-  padding-bottom: 7rem;
+  margin-bottom: auto;
 `;
 
 export const Map = styled.div`
