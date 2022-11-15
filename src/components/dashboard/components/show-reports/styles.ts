@@ -84,8 +84,8 @@ export const PDFIcon = styled(GoFilePdf)`
 `;
 
 export const ShareIcon = styled(GoFileSymlinkFile)`
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1rem;
+  height: 1rem;
 
   color: black;
 `;
