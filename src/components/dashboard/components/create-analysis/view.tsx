@@ -93,7 +93,7 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
 
       await postAnalysis({
         substances,
-        timestamp: new Date([day, month, year].join('.')),
+        timestamp: new Date([day, month, year].join('/')),
       });
 
       toast('Análise enviada com sucesso!', 'success');

@@ -1,5 +1,5 @@
 // deps
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SessionContext } from '../../contexts';
 
 // usecases
