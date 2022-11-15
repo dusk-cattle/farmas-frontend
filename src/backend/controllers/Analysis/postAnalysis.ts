@@ -13,6 +13,13 @@ export async function PostAnalysis(analysis: Analysis, isOnline: Boolean) {
                Authorization: "Bearer " + token,
             },
          };
+
+         await axios.post(
+            Connections.FARMAS + "/SoilAnalysis",
+            analysis,
+            config
+         );
+
          return true;
       } else {
          localStorage.setItem(LocalData.ANALYSIS_KEY, JSON.stringify(analysis));
