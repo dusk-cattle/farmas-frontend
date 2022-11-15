@@ -20,6 +20,7 @@ export const Container = styled.div`
 
 export const Header = styled.header`
   padding: 1rem;
+  padding-top: 2.5rem;
 
   display: flex;
   align-items: center;

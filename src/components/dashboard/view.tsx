@@ -1,9 +1,9 @@
 // deps
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { SessionContext } from '../../contexts';
 
 // usecases
-import { logout } from '../../usecases';
+import { getFarms, logout } from '../../usecases';
 
 // components
 import {
@@ -38,6 +38,14 @@ export function Dashboard() {
   const [showingReports, setShowingReports] = useState(false);
 
   const { data } = useContext(SessionContext);
+
+  const [hasFarm, setHasFarm] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      setHasFarm(!!(await getFarms()).length);
+    })();
+  }, []);
 
   if (creatingAnalysis)
     return <CreateAnalysis onClickBack={() => setCreatingAnalysis(false)} />;
@@ -76,8 +84,14 @@ export function Dashboard() {
       </Body>
 
       <Footer>
-        <FileIcon onClick={() => setCreatingAnalysis(true)} />
-        <ReportsIcon onClick={() => setShowingReports(true)} />
+        <FileIcon
+          onClick={() => setCreatingAnalysis(true)}
+          disabled={!hasFarm}
+        />
+        <ReportsIcon
+          onClick={() => setShowingReports(true)}
+          disabled={!hasFarm}
+        />
         {data?.role === Roles.OWNER && (
           <AddWorkerIcon onClick={() => setAddingWorker(true)} />
         )}

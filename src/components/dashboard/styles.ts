@@ -1,9 +1,10 @@
 // deps
 import styled, { css } from 'styled-components';
-
-// components
 import { AiOutlineFileAdd, AiOutlineUserAdd } from 'react-icons/ai';
 import { TbLogout, TbFileAnalytics } from 'react-icons/tb';
+
+// types
+import { IconProps } from './types';
 
 export const Container = styled.div`
   height: 100vh;
@@ -22,8 +23,9 @@ export const Body = styled.div`
 `;
 
 export const Map = styled.div`
-  height: 18rem;
+  height: 20rem;
   margin-bottom: 1rem;
+  padding-top: 1.5rem;
 
   display: flex;
   flex-direction: column;
@@ -69,8 +71,9 @@ export const Footer = styled.footer`
   padding: 1rem 1.5rem;
   left: 0;
   bottom: 0;
+  z-index: 1;
 
-  position: absolute;
+  position: inherit;
   display: flex;
   justify-content: space-between;
   gap: 2rem;
@@ -86,7 +89,7 @@ const footerIconStyle = css`
   opacity: 0.7;
 `;
 
-export const FileIcon = styled(AiOutlineFileAdd)`
+export const FileIcon = styled(AiOutlineFileAdd)<IconProps>`
   width: 4rem;
   height: 4rem;
   margin-top: -2rem;
@@ -96,14 +99,28 @@ export const FileIcon = styled(AiOutlineFileAdd)`
   color: white;
   background: ${({ theme }) => theme.secondary};
   border-radius: 50rem;
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      color: #fffa;
+      pointer-events: none;
+    `}
 `;
 
 export const AddWorkerIcon = styled(AiOutlineUserAdd)`
   ${footerIconStyle}
 `;
 
-export const ReportsIcon = styled(TbFileAnalytics)`
+export const ReportsIcon = styled(TbFileAnalytics)<IconProps>`
   ${footerIconStyle}
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      opacity: 0.3;
+      pointer-events: none;
+    `}
 `;
 
 export const LogoutIcon = styled(TbLogout)`

@@ -1,13 +1,15 @@
 // deps
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 // usecases
 import { login } from '../../../usecases';
 
 // contexts
 import { ToastContext } from '../../../contexts';
+
+// components
+import { SelectFarm } from './components';
 
 // enums
 import { Routes } from '../../../enums';
@@ -27,12 +29,13 @@ import {
 
 // types
 import { FormData } from './types';
-import { GetResources } from '../../../backend';
 
 export function LoginPage() {
-  const { register, handleSubmit, formState } = useForm<FormData>({
+  const { register, handleSubmit, formState, watch } = useForm<FormData>({
     mode: 'onChange',
   });
+
+  const [emailValue, passwordValue] = watch(['email', 'password']);
 
   const [loading, setLoading] = useState(false);
 
@@ -43,9 +46,9 @@ export function LoginPage() {
     );
   }
 
-  const navigate = useNavigate();
-
   const { toast } = useContext(ToastContext);
+
+  const [selectingFarm, setSelectingFarm] = useState(false);
 
   async function signIn(data: FormData) {
     setLoading(true);
@@ -54,12 +57,8 @@ export function LoginPage() {
       const { email, password } = data;
 
       await login({ email, password });
-      const resources = await GetResources()
 
-      // Será que dá pra deixar o usuário escolher alguma dessas fazendas p logar?
-      console.log(resources);
-
-      navigate(Routes.ROOT);
+      setSelectingFarm(true);
     } catch (error: any) {
       toast(error.message, 'error');
     }
@@ -101,6 +100,10 @@ export function LoginPage() {
         Ainda não possui uma conta?{' '}
         <Link to={Routes.REGISTER}>Registre-se</Link>
       </Span>
+
+      {selectingFarm && (
+        <SelectFarm email={emailValue} password={passwordValue} />
+      )}
     </Container>
   );
 }

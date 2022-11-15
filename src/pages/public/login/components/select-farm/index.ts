@@ -1,0 +1,1 @@
+export { SelectFarm } from './view';

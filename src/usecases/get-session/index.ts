@@ -23,7 +23,6 @@ export async function getSession(): Promise<Session | null> {
         }
       : null;
   } catch (e) {
-    console.log('lajsbdkhb');
     return null;
   }
 }

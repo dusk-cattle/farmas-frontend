@@ -5,12 +5,11 @@ import { CreateUser } from '../../backend';
 import { CreateUserProps } from './types';
 
 export async function createUser(props: CreateUserProps) {
-  const { name, email, password, role } = props;
+  const { name, email, password } = props;
 
   return await CreateUser({
     name,
     email,
     password,
-    role,
   });
 }

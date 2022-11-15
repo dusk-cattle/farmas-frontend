@@ -10,7 +10,7 @@ import { createUser, login } from '../../../usecases';
 import { ToastContext } from '../../../contexts';
 
 // enums
-import { Roles, Routes } from '../../../enums';
+import { Routes } from '../../../enums';
 
 // styles
 import {
@@ -24,7 +24,6 @@ import {
   Span,
   Link,
 } from '../styles';
-import { RadioGroup, Radio, Label } from './styles';
 
 // types
 import { FormData } from './types';
@@ -34,7 +33,7 @@ export function RegisterPage() {
     mode: 'onChange',
   });
 
-  const [role, password] = watch(['role', 'password']);
+  const password = watch('password');
 
   const [, setLoading] = useState(false);
 
@@ -52,9 +51,9 @@ export function RegisterPage() {
   async function signIn(data: FormData) {
     setLoading(true);
 
-    const { name, email, password, role } = data;
+    const { name, email, password } = data;
 
-    const createdUser = await createUser({ name, email, password, role });
+    const createdUser = await createUser({ name, email, password });
 
     if (createdUser) {
       const logged = await login({ email, password });
@@ -108,23 +107,6 @@ export function RegisterPage() {
         placeholder="Digite aqui"
         error={formState.errors.confirmPassword?.message}
       />
-
-      <RadioGroup>
-        <Label checked={role === Roles.OWNER}>
-          <Radio
-            {...register('role', { required: true })}
-            value={Roles.OWNER}
-          />
-          Sou dono
-        </Label>
-        <Label checked={role === Roles.WORKER}>
-          <Radio
-            {...register('role', { required: true })}
-            value={Roles.WORKER}
-          />
-          Sou operador
-        </Label>
-      </RadioGroup>
 
       <Button type="submit" disabled={!formState.isValid}>
         Cadastrar

@@ -183,7 +183,7 @@ export function FarmMap() {
       viewBox="0 0 200 200"
       width={250}
       height={300}
-      style={{ transform: 'rotate(-90deg)' }}
+      style={{ transform: 'rotate(-90deg)', overflow: 'visible' }}
     >
       <path
         fill="#287830"
