@@ -14,19 +14,15 @@ export async function PostAnalysis(analysis: Analysis, isOnline: Boolean) {
             },
          };
 
-         await axios.post(
-            Connections.FARMAS + "/SoilAnalysis",
-            analysis,
-            config
-         );
+         await axios.post(Connections.FARMAS + "/SoilAnalysis", analysis, config);
 
          return true;
       } else {
-         localStorage.setItem(LocalData.ANALYSIS_KEY, JSON.stringify(analysis));
+         localStorage.removeItem(LocalData.SUBSTANCES_KEY);
+         localStorage.setItem(LocalData.SUBSTANCES_KEY, JSON.stringify(analysis));
          return true;
       }
    } catch (error) {
-      console.log(error);
       throw new Error("Erro ao criar Análise");
    }
 }
