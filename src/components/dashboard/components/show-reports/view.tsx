@@ -26,6 +26,9 @@ import {
   EmptyContainer,
   EmptyIllustration,
   Loading,
+  ReportStatusContainer,
+  ReportStatusIndicator,
+  ShareIcon,
 } from './styles';
 
 // types
@@ -65,6 +68,46 @@ export function ShowReports(props: ShowReportsProps) {
       />
     );
 
+  function getCurrentReportState(report: Report) {
+    switch (report.status) {
+      case "REQUESTED":
+        return { text: "Na Fila", color: "grey" };
+
+      case "BUILDING":
+        return { text: "Criando", color: "darkorange" };
+
+      case "COMPLETE":
+        return { text: "Disponível", color: "green" };;
+
+      default:
+        return { text: "Erro", color: "red" };
+    }
+  }
+
+  async function share(report: Report) {
+    const blob = new Blob([report.html], {
+      type: 'text/html'
+    })
+
+    const file = new File([blob], `${report.date}.html`, { type: "text/html" });
+
+    const date = new Date(report.date).toLocaleDateString('pt-BR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+
+    try {
+      await window.navigator.share({
+        title: `Relatório de ${date}`,
+        files: [file]
+      });
+    } catch (err) {
+      alert(err);
+      console.error("Share failed:", err);
+    }
+  }
+
   function renderReports() {
     if (loading)
       return (
@@ -85,13 +128,14 @@ export function ShowReports(props: ShowReportsProps) {
         </Body>
       );
 
-    const reportCopmponents = reports.map((report, i) => {
+    const reportComponents = reports.map((report, i) => {
       const date = new Date(report.date).toLocaleDateString('pt-BR', {
-        weekday: 'long',
         year: 'numeric',
         month: 'long',
         day: 'numeric',
       });
+
+      const state = getCurrentReportState(report);
 
       return (
         <ReportContainer
@@ -102,12 +146,24 @@ export function ShowReports(props: ShowReportsProps) {
           }}
         >
           <PDFIcon />
+
           {date}
+
+          <ReportStatusContainer enabled={true}>
+            <span>{state.text}</span>
+            <ReportStatusIndicator color={state.color} />
+          </ReportStatusContainer>
+
+          {state.text === 'Disponível' &&
+            <ReportStatusContainer enabled={false} onClick={async () => false && await share(report)}>
+              <ShareIcon />
+            </ReportStatusContainer>
+          }
         </ReportContainer>
       );
     });
 
-    return <Body>{reportCopmponents}</Body>;
+    return <Body>{reportComponents}</Body>;
   }
 
   return (
