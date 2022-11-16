@@ -2,10 +2,11 @@ import axios from "axios";
 import { AnalysisProps } from "./types";
 import { LocalData } from "../../enums/localData";
 import { Connections } from "../../enums/connections";
-import { GetUserTokenFromStorage } from "../../utils";
-import { GetAnalysisFromLocalStorage } from "../../utils/getAnalysisLocalStorage";
+import { GetAnalysisFromLocalStorage, GetUserTokenFromStorage } from "../../utils";
+import isOnline from "is-online";
 
-export async function GetAnalysis(isOnline: boolean = true): Promise<AnalysisProps> {
+export async function GetAnalysis(): Promise<AnalysisProps> {
+   const online = await isOnline();
    try {
       const token = GetUserTokenFromStorage();
       const config = {
@@ -13,7 +14,7 @@ export async function GetAnalysis(isOnline: boolean = true): Promise<AnalysisPro
             Authorization: "Bearer " + token,
          },
       };
-      if (isOnline) {
+      if (online) {
          const response = await axios.get(Connections.FARMAS + "/SoilAnalysis", config);
          localStorage.removeItem(LocalData.ANALYSIS_KEY);
          localStorage.setItem(LocalData.ANALYSIS_KEY, JSON.stringify(response.data));

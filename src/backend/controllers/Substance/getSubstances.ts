@@ -5,8 +5,9 @@ import { Connections } from "../../enums/connections";
 import { GetUserTokenFromStorage } from "../../utils";
 import { GetSubstancesFromLocalStorage } from "../../utils/getSubstancesLocalStorage";
 import { SubstanceProps } from "./types";
-
-export async function GetSubstances(isOnline: boolean = true): Promise<SubstanceProps> {
+import isOnline from "is-online";
+export async function GetSubstances(): Promise<SubstanceProps> {
+   const online = await isOnline();
    try {
       const token = GetUserTokenFromStorage();
       const config = {
@@ -14,7 +15,7 @@ export async function GetSubstances(isOnline: boolean = true): Promise<Substance
             Authorization: "Bearer " + token,
          },
       };
-      if (isOnline) {
+      if (online) {
          const response = await axios.get(Connections.FARMAS + "/SubstanceRegistry", config);
          localStorage.removeItem(LocalData.SUBSTANCES_KEY);
          localStorage.setItem(LocalData.SUBSTANCES_KEY, JSON.stringify(response.data));

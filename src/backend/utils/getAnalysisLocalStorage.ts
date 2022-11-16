@@ -1,8 +1,7 @@
 import { AnalysisProps } from "../controllers/Analysis/types";
-import { SubstanceProps } from "../controllers/Substance/types";
 import { LocalData } from "../enums";
 
-export function GetAnalysisFromLocalStorage() {
+export function GetAnalysisFromLocalStorage(): AnalysisProps {
    const item = localStorage.getItem(LocalData.ANALYSIS_KEY);
    var analysis: AnalysisProps = [];
    if (item != null) {

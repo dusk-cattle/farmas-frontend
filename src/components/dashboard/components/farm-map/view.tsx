@@ -229,7 +229,7 @@ export function FarmMap() {
   return (
     <svg
       viewBox="0 0 200 200"
-      width={280}
+      width={270}
       height="100%"
       style={{ transform: 'rotate(-90deg)', overflow: 'visible' }}
     >
