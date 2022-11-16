@@ -3,10 +3,12 @@ import { Analysis } from "./types";
 import { LocalData } from "../../enums/localData";
 import { Connections } from "../../enums/connections";
 import { GetUserTokenFromStorage } from "../../utils";
+import isOnline from "is-online";
 
-export async function PostAnalysis(analysis: Analysis, isOnline: Boolean) {
+export async function PostAnalysis(analysis: Analysis) {
+   const online = await isOnline();
    try {
-      if (isOnline) {
+      if (online) {
          const token = GetUserTokenFromStorage();
          const config = {
             headers: {
@@ -18,11 +20,11 @@ export async function PostAnalysis(analysis: Analysis, isOnline: Boolean) {
 
          return true;
       } else {
-         localStorage.removeItem(LocalData.SUBSTANCES_KEY);
-         localStorage.setItem(LocalData.SUBSTANCES_KEY, JSON.stringify(analysis));
+         localStorage.setItem(LocalData.ANALYSIS__SYNC_KEY, JSON.stringify(analysis));
          return true;
       }
    } catch (error) {
+      console.log(error);
       throw new Error("Erro ao criar Análise");
    }
 }

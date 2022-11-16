@@ -5,7 +5,7 @@ import { GetSubstances } from "../../backend";
 import { Substance } from "../../models";
 
 export async function getSubstances(): Promise<Substance[]> {
-   const response = await GetSubstances(navigator.onLine);
+   const response = await GetSubstances();
 
    return response.map<Substance>((substance) => ({
       id: substance.id,
