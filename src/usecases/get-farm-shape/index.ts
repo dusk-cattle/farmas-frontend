@@ -5,7 +5,7 @@ import { GetCoordinates } from '../../backend';
 import { FarmShape } from '../../models';
 
 export async function getFarmShape() {
-  const coordinates = await GetCoordinates();
+  const { coordinates } = await GetCoordinates();
 
   const farmShape: FarmShape = [];
 
