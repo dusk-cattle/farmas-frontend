@@ -1,11 +1,12 @@
 // deps
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 
 // components
 import { VscLoading } from 'react-icons/vsc';
 import { FaChevronLeft } from 'react-icons/fa';
 import { GoFilePdf, GoFileSymlinkFile } from 'react-icons/go';
 import { AiOutlineComment } from 'react-icons/ai';
+import { FaShareAlt } from 'react-icons/fa';
 
 // assets
 import { emptyIllustration } from './assets';
@@ -68,9 +69,9 @@ export const ReportContainer = styled.div`
   margin-bottom: 0.5rem;
   padding: 1rem;
 
+  gap: 0.5rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 1rem;
@@ -83,11 +84,12 @@ export const PDFIcon = styled(GoFilePdf)`
   color: ${({ theme }) => theme.error};
 `;
 
-export const ShareIcon = styled(GoFileSymlinkFile)`
-  width: 1rem;
-  height: 1rem;
+export const ShareIcon = styled(FaShareAlt)`
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-left: -0.05rem;
 
-  color: black;
+  color: ${({ theme }) => theme.border};
 `;
 
 interface ReportStatusContainerProps {
@@ -99,16 +101,28 @@ export const ReportStatusContainer = styled.div<ReportStatusContainerProps>`
   justify-content: space-between;
   align-items: center;
 
-  padding: 0.6rem;
+  padding: 0.25rem 0.5rem;
+  margin-left: auto;
 
+  color: ${({ theme }) => theme.foreground};
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 1rem;
-  background-color: ${({ enabled, theme }) => (!enabled ? theme.border : '')};
 
   span {
-    font-size: 0.6rem;
+    font-size: 0.5rem;
+    text-transform: uppercase;
     margin-right: 5px;
+    font-weight: 600;
   }
+
+  ${({ enabled }) =>
+    !enabled &&
+    css`
+      width: 2rem;
+      height: 2rem;
+      padding: 0.5rem;
+      margin-left: 0;
+    `}
 `;
 
 interface ReportStatusIndicatorProps {
@@ -124,7 +138,9 @@ export const ReportStatusIndicator = styled.div<ReportStatusIndicatorProps>`
   width: 0.6rem;
   height: 0.6rem;
 
-  margin-right: 5px;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-right: -0.25rem;
 `;
 
 export const CommentIcon = styled(AiOutlineComment)`
