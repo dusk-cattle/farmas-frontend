@@ -92,7 +92,9 @@ export function Comments(props: CommentsProps) {
               <p>{comment.content}</p>
 
               <CommentDateTime>
-                {comment.createdAt.toLocaleString()}
+                {comment.createdAt.toLocaleString('pt-BR', {
+                  timeZone: 'America/New_York',
+                })}
               </CommentDateTime>
             </CommentItem>
           </CommentContainer>

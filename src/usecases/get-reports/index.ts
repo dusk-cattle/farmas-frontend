@@ -11,5 +11,6 @@ export async function getReports(): Promise<Report[]> {
     id: value.id,
     html: value.content,
     date: value.createdAt,
+    status: value.status
   }));
 }

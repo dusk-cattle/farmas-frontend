@@ -4,7 +4,7 @@ import styled, { keyframes } from 'styled-components';
 // components
 import { VscLoading } from 'react-icons/vsc';
 import { FaChevronLeft } from 'react-icons/fa';
-import { GoFilePdf } from 'react-icons/go';
+import { GoFilePdf, GoFileSymlinkFile } from 'react-icons/go';
 import { AiOutlineComment } from 'react-icons/ai';
 
 // assets
@@ -81,6 +81,51 @@ export const PDFIcon = styled(GoFilePdf)`
   height: 1.5rem;
 
   color: ${({ theme }) => theme.error};
+`;
+
+export const ShareIcon = styled(GoFileSymlinkFile)`
+  width: 1rem;
+  height: 1rem;
+
+  color: black;
+`;
+
+interface ReportStatusContainerProps {
+  enabled?: boolean;
+}
+export const ReportStatusContainer = styled.div<ReportStatusContainerProps>`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  
+  padding: 0.6rem;
+
+  border: 1px solid ${({ theme }) => theme.border};
+  border-radius: 1rem;
+  background-color: ${({ enabled, theme }) => !enabled ? theme.border : ""};
+
+  span {
+    font-size: 0.6rem;
+    margin-right: 5px;
+  }
+`;
+
+
+interface ReportStatusIndicatorProps {
+  color: string;
+}
+
+export const ReportStatusIndicator = styled.div<ReportStatusIndicatorProps>`
+  border-radius: 50%;
+  
+  background-color: ${({ color }) => color};
+  
+  display: flex;
+  width: 0.6rem;
+  height: 0.6rem;
+
+  margin-right: 5px;
 `;
 
 export const CommentIcon = styled(AiOutlineComment)`
