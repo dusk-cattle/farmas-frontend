@@ -5,11 +5,13 @@ import { GetCoordinates } from '../../backend';
 import { FarmShape } from '../../models';
 
 export async function getFarmShape() {
-  const { coordinates } = await GetCoordinates();
+  const coordinates = await GetCoordinates();
+
+  if (!coordinates) return
 
   const farmShape: FarmShape = [];
 
-  coordinates.forEach((value) => {
+  coordinates.coordinates.forEach((value) => {
     farmShape.push({
       x:
         (value.latitude.hours +

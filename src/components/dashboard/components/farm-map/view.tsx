@@ -20,6 +20,8 @@ export function FarmMap() {
       try {
         const shape = await getFarmShape();
 
+        if (!shape) return
+
         const minX = shape.reduce(
           (min, value) => (value.x < min ? value.x : min),
           Number.MAX_SAFE_INTEGER
@@ -240,13 +242,12 @@ export function FarmMap() {
         strokeLinecap="round"
         strokeLinejoin="round"
         opacity={0.3}
-        d={`${
-          farmShape.length
+        d={`${farmShape.length
             ? farmShape
-                .map((value, i) => `${i ? 'L' : 'M'}${value.x} ${value.y}`)
-                .join(' ') + ' Z'
+              .map((value, i) => `${i ? 'L' : 'M'}${value.x} ${value.y}`)
+              .join(' ') + ' Z'
             : ''
-        }`}
+          }`}
       />
       {renderBushs()}
       {renderGrass()}
