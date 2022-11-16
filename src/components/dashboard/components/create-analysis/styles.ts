@@ -4,6 +4,7 @@ import styled from 'styled-components';
 // components
 import { FaChevronLeft, FaPlusCircle } from 'react-icons/fa';
 import { MdOutlineClose } from 'react-icons/md';
+import { Input } from '../../../input';
 
 export const Container = styled.div`
   width: 100%;
@@ -96,4 +97,17 @@ export const SubmitButton = styled.button`
   border-radius: 0.5rem;
   font-size: 1rem;
   font-weight: 600;
+`;
+
+export const SubstanceInput = styled(Input)`
+  margin-top: 1.5rem;
+
+  label {
+    margin-top: -5rem;
+  }
+
+  input {
+    text-align: left;
+    margin-left: -2.5rem;
+  }
 `;

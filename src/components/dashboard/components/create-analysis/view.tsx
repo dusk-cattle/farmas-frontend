@@ -26,6 +26,7 @@ import {
   CloseIcon,
   PlusIcon,
   SubmitButton,
+  SubstanceInput,
 } from './styles';
 
 // types
@@ -140,7 +141,7 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
 
         {selectedSubstances.map((substance) => (
           <InputContainer key={substance.id}>
-            <Input
+            <SubstanceInput
               {...register(substance.id, { required: true })}
               key={substance.id}
               name={substance.id}
