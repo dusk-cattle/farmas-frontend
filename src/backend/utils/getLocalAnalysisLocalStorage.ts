@@ -1,4 +1,4 @@
-import { Analysis } from "../../models";
+import { Analysis } from "../controllers/Analysis/types";
 import { LocalData } from "../enums";
 
 export function GetLocalSavedAnalysisFromLocalStorage(): Analysis[] {

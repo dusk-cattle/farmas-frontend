@@ -23,6 +23,7 @@ export async function GetReporter(): Promise<ReporterProps[]> {
          return response.data;
       } else {
          const reports = GetReportsFromLocalStorage();
+         console.log(reports);
          return reports;
       }
    } catch (error) {
