@@ -24,6 +24,7 @@ export const Container = styled.div<ContainerProps>`
   left: 0;
   width: 100%;
   padding: 2rem;
+  z-index: 40;
 
   position: absolute;
 

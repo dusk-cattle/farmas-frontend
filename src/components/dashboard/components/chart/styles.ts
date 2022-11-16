@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { emptyIllustration } from './assets';
 
 export const EmptyContainer = styled.div`
-  margin-top: 3rem;
+  margin: 3rem 0;
 
   display: flex;
   flex-direction: column;

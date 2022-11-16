@@ -9,7 +9,7 @@ import { Report } from '../../../../models';
 import { getReports } from '../../../../usecases';
 
 // components
-import { Comments } from './components';
+import { Comments, SearchInput } from './components';
 
 // styles
 import {
@@ -37,7 +37,8 @@ import { ShowReportsProps } from './types';
 export function ShowReports(props: ShowReportsProps) {
   const { onClickBack } = props;
 
-  const [reports, setReports] = useState<Report[]>([]);
+  const [allReports, setAllReports] = useState<Report[]>([]);
+  const [searchedReports, setSearchedReports] = useState<Report[]>([]);
 
   const [currentReport, setCurrentReport] = useState<string>('');
   const [currentHTML, setCurrentHTML] = useState<string>();
@@ -49,7 +50,9 @@ export function ShowReports(props: ShowReportsProps) {
   useEffect(() => {
     (async () => {
       try {
-        setReports(await getReports());
+        const reports = await getReports();
+        setAllReports(reports);
+        setSearchedReports(reports);
       } catch (error: any) {
         toast(error.message, 'error');
       } finally {
@@ -70,26 +73,26 @@ export function ShowReports(props: ShowReportsProps) {
 
   function getCurrentReportState(report: Report) {
     switch (report.status) {
-      case "REQUESTED":
-        return { text: "Na Fila", color: "grey" };
+      case 'REQUESTED':
+        return { text: 'Na Fila', color: 'grey' };
 
-      case "BUILDING":
-        return { text: "Criando", color: "darkorange" };
+      case 'BUILDING':
+        return { text: 'Criando', color: 'darkorange' };
 
-      case "COMPLETE":
-        return { text: "Disponível", color: "green" };;
+      case 'COMPLETE':
+        return { text: 'Disponível', color: 'green' };
 
       default:
-        return { text: "Erro", color: "red" };
+        return { text: 'Erro', color: 'red' };
     }
   }
 
   async function share(report: Report) {
     const blob = new Blob([report.html], {
-      type: 'text/html'
-    })
+      type: 'text/html',
+    });
 
-    const file = new File([blob], `${report.date}.html`, { type: "text/html" });
+    const file = new File([blob], `${report.date}.html`, { type: 'text/html' });
 
     const date = new Date(report.date).toLocaleDateString('pt-BR', {
       year: 'numeric',
@@ -100,11 +103,11 @@ export function ShowReports(props: ShowReportsProps) {
     try {
       await window.navigator.share({
         title: `Relatório de ${date}`,
-        files: [file]
+        files: [file],
       });
     } catch (err) {
       alert(err);
-      console.error("Share failed:", err);
+      console.error('Share failed:', err);
     }
   }
 
@@ -118,7 +121,7 @@ export function ShowReports(props: ShowReportsProps) {
         </Body>
       );
 
-    if (!reports.length)
+    if (!searchedReports.length)
       return (
         <Body>
           <EmptyContainer>
@@ -128,7 +131,7 @@ export function ShowReports(props: ShowReportsProps) {
         </Body>
       );
 
-    const reportComponents = reports.map((report, i) => {
+    const reportComponents = searchedReports.map((report, i) => {
       const date = new Date(report.date).toLocaleDateString('pt-BR', {
         year: 'numeric',
         month: 'long',
@@ -154,16 +157,28 @@ export function ShowReports(props: ShowReportsProps) {
             <ReportStatusIndicator color={state.color} />
           </ReportStatusContainer>
 
-          {state.text === 'Disponível' &&
-            <ReportStatusContainer enabled={false} onClick={async () => false && await share(report)}>
+          {state.text === 'Disponível' && (
+            <ReportStatusContainer
+              enabled={false}
+              onClick={async () => false && (await share(report))}
+            >
               <ShareIcon />
             </ReportStatusContainer>
-          }
+          )}
         </ReportContainer>
       );
     });
 
-    return <Body>{reportComponents}</Body>;
+    return (
+      <Body>
+        <SearchInput
+          search={(filterReports) =>
+            setSearchedReports(filterReports(allReports))
+          }
+        />
+        {reportComponents}
+      </Body>
+    );
   }
 
   return (

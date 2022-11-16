@@ -78,7 +78,7 @@ export function Comments(props: CommentsProps) {
           <BackIcon />
         </BackButton>
 
-        <Title>Comments</Title>
+        <Title>Comentários</Title>
       </Header>
 
       <ConversationSection>

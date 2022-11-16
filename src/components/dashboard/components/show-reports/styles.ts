@@ -98,12 +98,12 @@ export const ReportStatusContainer = styled.div<ReportStatusContainerProps>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  
+
   padding: 0.6rem;
 
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 1rem;
-  background-color: ${({ enabled, theme }) => !enabled ? theme.border : ""};
+  background-color: ${({ enabled, theme }) => (!enabled ? theme.border : '')};
 
   span {
     font-size: 0.6rem;
@@ -111,16 +111,15 @@ export const ReportStatusContainer = styled.div<ReportStatusContainerProps>`
   }
 `;
 
-
 interface ReportStatusIndicatorProps {
   color: string;
 }
 
 export const ReportStatusIndicator = styled.div<ReportStatusIndicatorProps>`
   border-radius: 50%;
-  
+
   background-color: ${({ color }) => color};
-  
+
   display: flex;
   width: 0.6rem;
   height: 0.6rem;
