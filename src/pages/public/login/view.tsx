@@ -1,18 +1,21 @@
 // deps
-import { useContext, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useContext, useState } from "react";
+import { useForm } from "react-hook-form";
 
 // usecases
-import { login } from '../../../usecases';
+import { login } from "../../../usecases";
+
+// hooks
+import { useWatchdog } from "../../../backend";
 
 // contexts
-import { ToastContext } from '../../../contexts';
+import { ToastContext } from "../../../contexts";
 
 // components
-import { SelectFarm } from './components';
+import { SelectFarm } from "./components";
 
 // enums
-import { Routes } from '../../../enums';
+import { Routes } from "../../../enums";
 
 // styles
 import {
@@ -25,24 +28,27 @@ import {
   Button,
   Span,
   Link,
-} from '../styles';
+} from "../styles";
 
 // types
-import { FormData } from './types';
+import { FormData } from "./types";
 
 export function LoginPage() {
   const { register, handleSubmit, formState, watch } = useForm<FormData>({
-    mode: 'onChange',
+    mode: "onChange",
   });
 
-  const [emailValue, passwordValue] = watch(['email', 'password']);
+  const [emailValue, passwordValue] = watch(["email", "password"]);
 
   const [loading, setLoading] = useState(false);
+
+  const { isAuthOnline } = useWatchdog();
+  // TODO: remover console.log("Autenticação está online?: " + isAuthOnline);
 
   function validateEmailFormat(value: string) {
     return (
       !!value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)?.length ||
-      'E-mail inválido'
+      "E-mail inválido"
     );
   }
 
@@ -60,7 +66,7 @@ export function LoginPage() {
 
       setSelectingFarm(true);
     } catch (error: any) {
-      toast(error.message, 'error');
+      toast(error.message, "error");
     }
 
     setLoading(false);
@@ -77,8 +83,8 @@ export function LoginPage() {
       <H2>Entre para usar a plataforma</H2>
 
       <Input
-        {...register('email', {
-          required: 'Digite seu e-mail',
+        {...register("email", {
+          required: "Digite seu e-mail",
           validate: validateEmailFormat,
         })}
         label="E-mail"
@@ -86,7 +92,7 @@ export function LoginPage() {
         error={formState.errors.email?.message}
       />
       <Input
-        {...register('password', { required: 'Digite sua senha' })}
+        {...register("password", { required: "Digite sua senha" })}
         label="Senha"
         type="password"
         placeholder="Digite aqui"
@@ -94,10 +100,10 @@ export function LoginPage() {
       />
 
       <Button disabled={!formState.isValid || loading} type="submit">
-        {loading ? '...' : 'Entrar'}
+        {loading ? "..." : "Entrar"}
       </Button>
       <Span>
-        Ainda não possui uma conta?{' '}
+        Ainda não possui uma conta?{" "}
         <Link to={Routes.REGISTER}>Registre-se</Link>
       </Span>
 

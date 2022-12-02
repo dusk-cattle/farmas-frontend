@@ -1,24 +1,26 @@
 // deps
-import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
 
 // config
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import reportWebVitals from "./reportWebVitals";
 
 // providers
-import { ToastContextProvider } from './contexts';
+import { ToastContextProvider } from "./contexts";
 
 // components
-import { Root, RegisterPage, LoginPage } from './pages';
+import { Root, RegisterPage, LoginPage } from "./pages";
 
 // enums
-import { Routes } from './enums';
+import { Routes } from "./enums";
 
 // styles
-import './index.css';
-import { defaultTheme } from './styles';
+import "./index.css";
+import { defaultTheme } from "./styles";
+
+import { OnlineProvider } from "./backend";
 
 const router = createBrowserRouter([
   { path: Routes.ROOT, element: <Root /> },
@@ -26,10 +28,12 @@ const router = createBrowserRouter([
   { path: Routes.LOGIN, element: <LoginPage /> },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <ThemeProvider theme={defaultTheme}>
     <ToastContextProvider>
-      <RouterProvider router={router} />
+      <OnlineProvider>
+        <RouterProvider router={router} />
+      </OnlineProvider>
     </ToastContextProvider>
   </ThemeProvider>
 );
