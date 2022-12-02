@@ -30,17 +30,23 @@ function OnlineProvider({ children }: { children: ReactNode }) {
   }, [online]);
 
   async function updateOnlineState() {
-    const isReportOnline = await isServiceOnline(
+    const isReportOnlinePromise = isServiceOnline(
       Connections.REPORTER + "/health"
     );
 
-    const isAuthOnline = await isServiceOnline(
+    const isAuthOnlinePromise = isServiceOnline(
       Connections.GATEKEEPER + "/health"
     );
 
-    const isAnalysisOnline = await isServiceOnline(
+    const isAnalysisOnlinePromise = isServiceOnline(
       Connections.FARMAS + "/health"
     );
+
+    const [isReportOnline, isAuthOnline, isAnalysisOnline] = await Promise.all([
+      isReportOnlinePromise,
+      isAuthOnlinePromise,
+      isAnalysisOnlinePromise,
+    ]);
 
     const onlineState = { isReportOnline, isAuthOnline, isAnalysisOnline };
 
