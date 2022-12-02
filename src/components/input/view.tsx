@@ -66,8 +66,13 @@ export const Input = forwardRef((props: InputProps, ref: any) => {
             : rest.type
         }
       />
-      {unit}
-      {renderRightIcon()}
+
+      {unit && (
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          {unit}
+          {renderRightIcon()}
+        </div>
+      )}
     </Container>
   );
 });

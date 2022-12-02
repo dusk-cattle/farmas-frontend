@@ -108,6 +108,7 @@ export const SubstanceInput = styled(Input)`
 
   input {
     text-align: left;
-    margin-left: -2.5rem;
+
+    position: absolute;
   }
 `;
