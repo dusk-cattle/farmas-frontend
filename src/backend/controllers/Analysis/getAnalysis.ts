@@ -18,9 +18,13 @@ export async function GetAnalysis(): Promise<AnalysisProps> {
          const response = await axios.get(Connections.FARMAS + "/SoilAnalysis", config);
          localStorage.removeItem(LocalData.ANALYSIS_KEY);
          localStorage.setItem(LocalData.ANALYSIS_KEY, JSON.stringify(response.data));
+         console.log("chamou analises online");
+         console.log(response.data);
          return response.data;
       } else {
+         console.log("chamou analises ofline");
          const analysis = GetAnalysisFromLocalStorage();
+         console.log(analysis);
          return analysis;
       }
    } catch (error) {
