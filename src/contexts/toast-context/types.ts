@@ -2,7 +2,7 @@
 import { ReactNode } from 'react';
 
 export interface ToastContextValue {
-  toast(message: string, type: 'success' | 'error'): void;
+  toast(message: string, type: 'success' | 'error', time?: number): void;
 }
 
 export interface ToastContextProviderProps {
@@ -11,4 +11,5 @@ export interface ToastContextProviderProps {
 
 export interface ContainerProps {
   type?: 'success' | 'error';
+  time?: number;
 }

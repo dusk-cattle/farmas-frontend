@@ -20,21 +20,30 @@ export function ToastContextProvider(props: ToastContextProviderProps) {
 
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState<'success' | 'error'>();
+  const [toastTime, setToastTime] = useState<number>();
 
-  const toast = useCallback((message: string, type: 'success' | 'error') => {
-    setToastMessage(message);
-    setToastType(type);
+  const toast = useCallback(
+    (message: string, type: 'success' | 'error', time: number = 3000) => {
+      setToastMessage(message);
+      setToastType(type);
+      setToastTime(time);
 
-    setTimeout(() => {
-      setToastMessage('');
-      setToastType(undefined);
-    }, 3000);
-  }, []);
+      setTimeout(() => {
+        setToastMessage('');
+        setToastType(undefined);
+      }, time);
+    },
+    []
+  );
 
   return (
     <ToastContext.Provider value={{ toast }}>
       {children}
-      {toastMessage && <Container type={toastType}>{toastMessage}</Container>}
+      {toastMessage && (
+        <Container type={toastType} time={toastTime}>
+          {toastMessage}
+        </Container>
+      )}
     </ToastContext.Provider>
   );
 }

@@ -27,10 +27,12 @@ import {
   PlusIcon,
   SubmitButton,
   SubstanceInput,
+  WarnIcon,
 } from './styles';
 
 // types
 import { CreateAnalysisProps, FormData } from './types';
+import { useWatchdog } from '../../../../backend';
 
 const birthDateFormat = /[0-9]{2}\.[0-9]{2}\.[0-9]{4}/g;
 
@@ -118,6 +120,17 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
     trigger('birthDate');
   }
 
+  const { isAnalysisOnline: isOnline } = useWatchdog();
+
+  useEffect(() => {
+    if (!isOnline)
+      toast(
+        'As análises podem ser cadastradas, mas não serão exibidas enquanto você estiver fora do ar.',
+        'error',
+        6000
+      );
+  }, [isOnline]);
+
   return (
     <Container>
       <Header>
@@ -125,6 +138,8 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
           <BackIcon />
         </BackButton>
         <Title>Nova Análise de Solo</Title>
+
+        {!isOnline && <WarnIcon />}
       </Header>
 
       <Form onSubmit={handleSubmit(createAnalysis)}>

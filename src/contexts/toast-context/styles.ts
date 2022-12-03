@@ -34,6 +34,6 @@ export const Container = styled.div<ContainerProps>`
     type === 'success' ? theme.primary : theme.error};
   box-shadow: 0 1rem 4rem #0009;
   animation-name: ${animation};
-  animation-duration: 3050ms;
+  animation-duration: ${({ time }) => (time ? time + 50 : 3050)}ms;
   animation-timing-function: ease;
 `;

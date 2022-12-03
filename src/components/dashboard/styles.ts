@@ -2,6 +2,7 @@
 import styled, { css } from 'styled-components';
 import { AiOutlineFileAdd, AiOutlineUserAdd } from 'react-icons/ai';
 import { TbLogout, TbFileAnalytics } from 'react-icons/tb';
+import { BiWifiOff } from 'react-icons/bi';
 
 // types
 import { IconProps } from './types';
@@ -49,6 +50,7 @@ export const Title = styled.h1`
 
   display: flex;
   justify-content: space-between;
+  gap: 0.75rem;
   flex-direction: row-reverse;
   align-items: center;
 
@@ -129,4 +131,15 @@ export const LogoutIcon = styled(TbLogout)`
 
   cursor: pointer;
   color: white;
+`;
+
+export const OfflineIcon = styled(BiWifiOff)`
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: auto;
+  padding: 0.375rem;
+
+  color: white;
+  background: ${({ theme }) => theme.foreground + '66'};
+  border-radius: 1.5rem;
 `;

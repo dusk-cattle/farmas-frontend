@@ -1,9 +1,10 @@
 // deps
 import styled from 'styled-components';
-
-// components
 import { FaChevronLeft, FaPlusCircle } from 'react-icons/fa';
 import { MdOutlineClose } from 'react-icons/md';
+import { ImWarning } from 'react-icons/im';
+
+// components
 import { Input } from '../../../input';
 
 export const Container = styled.div`
@@ -111,4 +112,13 @@ export const SubstanceInput = styled(Input)`
 
     position: absolute;
   }
+`;
+
+export const WarnIcon = styled(ImWarning)`
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: auto;
+  margin-right: 0.5rem;
+
+  color: ${({ theme }) => theme.secondary};
 `;

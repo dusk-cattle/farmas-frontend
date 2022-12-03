@@ -1,7 +1,7 @@
 // deps
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
-import { SessionContext } from '../../contexts';
+import { SessionContext, ToastContext } from '../../contexts';
 
 // usecases
 import { getFarms, logout } from '../../usecases';
@@ -32,9 +32,10 @@ import {
   AddWorkerIcon,
   ReportsIcon,
   LogoutIcon,
+  OfflineIcon,
 } from './styles';
 import { WeatherApiResponse, WeatherData } from './types';
-import { GetCoordinates } from '../../backend';
+import { GetCoordinates, useWatchdog } from '../../backend';
 import { apiKey } from '../../keys/weatherapi';
 
 export function Dashboard() {
@@ -51,17 +52,35 @@ export function Dashboard() {
   useEffect(() => {
     (async () => {
       setHasFarm(!!(await getFarms()).length);
-
     })();
-
-
   }, []);
 
   useEffect(() => {
     (async () => {
-      await getCurrentWeather()
+      await getCurrentWeather();
     })();
-  }, [hasFarm])
+  }, [hasFarm]);
+
+  const { toast } = useContext(ToastContext);
+
+  const { isAnalysisOnline, isAuthOnline, isReportOnline } = useWatchdog();
+
+  const isOnline = isAnalysisOnline && isAuthOnline && isReportOnline;
+
+  const [wasOnline, setWasOnline] = useState(isOnline);
+
+  useEffect(() => {
+    if (!isOnline)
+      toast(
+        'Você está fora do ar. As funcionalidades do aplicativo ficarão limitadas.',
+        'error',
+        6000
+      );
+
+    if (!wasOnline && isOnline) toast('Você está online novamente!', 'success');
+
+    setWasOnline(isOnline);
+  }, [isOnline]);
 
   if (creatingAnalysis)
     return <CreateAnalysis onClickBack={() => setCreatingAnalysis(false)} />;
@@ -77,24 +96,21 @@ export function Dashboard() {
       await logout();
       // eslint-disable-next-line no-restricted-globals
       location.reload();
-    } catch (error) { }
+    } catch (error) {}
   }
 
   async function getCurrentWeather() {
-    if (!hasFarm)
-      return
+    if (!hasFarm) return;
 
     const location = await GetCoordinates();
-    if (!location)
-      return
+    if (!location) return;
 
-    const { latitude, longitude } = location.centerPoint
+    const { latitude, longitude } = location.centerPoint;
 
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&lang=pt_br&appid=${apiKey}`;
-    const { data } = await axios.get<WeatherApiResponse>(url)
+    const { data } = await axios.get<WeatherApiResponse>(url);
 
-    if (!data.weather)
-      return
+    if (!data.weather) return;
 
     const { description, icon } = data.weather[0];
 
@@ -103,10 +119,10 @@ export function Dashboard() {
     const weatherData: WeatherData = {
       description,
       icon: iconUrl,
-      temperature: data.main
-    }
+      temperature: data.main,
+    };
 
-    setCurrentWeather(weatherData)
+    setCurrentWeather(weatherData);
   }
 
   return (
@@ -116,6 +132,7 @@ export function Dashboard() {
           <Header>
             <Title>
               <LogoutIcon onClick={handleLogoutButton} />
+              {!isOnline && <OfflineIcon />}
               {data?.resource?.name}
             </Title>
           </Header>
@@ -125,17 +142,28 @@ export function Dashboard() {
           </FarmContainer>
         </Map>
 
-        {
-          currentWeather &&
-          <ReportStatusContainer enabled={true} style={{ margin: '10px', marginBottom: '20px' }}>
+        {currentWeather && (
+          <ReportStatusContainer
+            enabled={true}
+            style={{ margin: '10px', marginBottom: '20px' }}
+          >
             <img src={currentWeather?.icon} />
 
-            <span style={{ textTransform: 'capitalize' }}>{currentWeather?.description}</span>
-            <span>Temperatura: {(currentWeather.temperature.temp - 273.15).toFixed(2)}C</span>
-            <span>Pressão: {(currentWeather.temperature.pressure).toFixed(0)}hPa</span>
-            <span>Humidade: {(currentWeather.temperature.humidity).toFixed(0)}%</span>
+            <span style={{ textTransform: 'capitalize' }}>
+              {currentWeather?.description}
+            </span>
+            <span>
+              Temperatura:{' '}
+              {(currentWeather.temperature.temp - 273.15).toFixed(2)}C
+            </span>
+            <span>
+              Pressão: {currentWeather.temperature.pressure.toFixed(0)}hPa
+            </span>
+            <span>
+              Humidade: {currentWeather.temperature.humidity.toFixed(0)}%
+            </span>
           </ReportStatusContainer>
-        }
+        )}
 
         <Chart />
       </Body>
