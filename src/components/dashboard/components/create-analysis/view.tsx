@@ -31,7 +31,7 @@ import {
 
 // types
 import { CreateAnalysisProps, FormData } from "./types";
-import { SubstanceController, useWatchdog } from "../../../../backend";
+import { useWatchdog } from "../../../../backend";
 
 const birthDateFormat = /[0-9]{2}\.[0-9]{2}\.[0-9]{4}/g;
 
@@ -67,7 +67,7 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
 
   useEffect(() => {
     (async () => {
-      const susbtances = await SubstanceController.getSubstances();
+      const susbtances = await getSubstances();
 
       if (!susbtances.length)
         return toast("Não foi possível carregar as substâncias", "error");
