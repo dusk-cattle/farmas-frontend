@@ -2,6 +2,8 @@ import axios, { AxiosInstance } from "axios";
 
 import { Connections } from "../../enums";
 
+import { RethrowWithMessage } from "../../decorators";
+
 import { AuthorizationProvider, IAuthorizationProvider } from "../../services";
 
 import { AnalysisServiceWatchdog, IAnalysisServiceWatchdog } from "../Analysis";
@@ -34,6 +36,7 @@ class InternalSubstanceController implements ISubstanceController {
     this.axiosInstance = axiosInstance;
   }
 
+  @RethrowWithMessage("Erro ao obter substâncias")
   public async getSubstances(): Promise<Substance[]> {
     const isServiceOnline =
       await this.analysisServiceWatchdog.isAnalysisServiceOnline();

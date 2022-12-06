@@ -4,6 +4,8 @@ import { Connections } from "../../enums";
 
 import { AuthorizationProvider, IAuthorizationProvider } from "../../services";
 
+import { RethrowWithMessage } from "../../decorators";
+
 import { AnalysisCreationProps, ProcessedAnalysis } from "./types";
 
 import { AnalysisServiceWatchdog, IAnalysisServiceWatchdog } from "./watchdog";
@@ -36,6 +38,7 @@ class InternalAnalysisController implements IAnalysisController {
     this.analysisCache = analysisCache;
   }
 
+  @RethrowWithMessage("Erro ao obter análises")
   public async getAnalysis(): Promise<ProcessedAnalysis[]> {
     const isServiceOnline =
       await this.analysisServiceWatchdog.isAnalysisServiceOnline();
@@ -59,6 +62,7 @@ class InternalAnalysisController implements IAnalysisController {
     return data;
   }
 
+  @RethrowWithMessage("Erro ao processar análise")
   public async postAnalysis(analysis: AnalysisCreationProps): Promise<void> {
     const isServiceOnline =
       await this.analysisServiceWatchdog.isAnalysisServiceOnline();
