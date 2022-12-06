@@ -1,16 +1,16 @@
 // backend
-import { GetSubstances } from "../../backend";
+import { SubstanceController } from "../../backend";
 
 // models
 import { Substance } from "../../models";
 
 export async function getSubstances(): Promise<Substance[]> {
-   const response = await GetSubstances();
+  const response = await SubstanceController.getSubstances();
 
-   return response.map<Substance>((substance) => ({
-      id: substance.id,
-      name: substance.name,
-      unit: substance.unit,
-      description: substance.description,
-   }));
+  return response.map<Substance>((substance) => ({
+    id: substance.id,
+    name: substance.name,
+    unit: substance.unit,
+    description: substance.description,
+  }));
 }

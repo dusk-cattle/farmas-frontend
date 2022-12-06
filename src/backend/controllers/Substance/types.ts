@@ -1,10 +1,10 @@
-export type SubstanceProps = {
-  description: string;
+export type Substance = {
   id: string;
-  maxValue: number;
-  method: string;
-  minValue: number;
   name: string;
+  description: string;
+  maxValue: number;
+  minValue: number;
   unit: string;
+  method: string;
   version: number;
-}[];
+};

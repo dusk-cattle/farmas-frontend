@@ -1,11 +1,11 @@
 // backend
-import { GetAnalysis } from '../../backend';
+import { AnalysisController } from "../../backend";
 
 // models
-import { ChartModel } from '../../models';
+import { ChartModel } from "../../models";
 
 export async function getChartData(): Promise<ChartModel> {
-  const data = await GetAnalysis();
+  const data = await AnalysisController.getAnalysis();
 
   const chartData: ChartModel = {};
 

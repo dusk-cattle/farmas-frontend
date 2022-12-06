@@ -1,5 +1,8 @@
 import axios from "axios";
 import { createContext, ReactNode, useEffect, useState } from "react";
+import { AnalysisCache, AnalysisController } from "../controllers";
+import { AnalysisSyncHandler } from "../controllers/Analysis/sync";
+import { AnalysisServiceWatchdog } from "../controllers/Analysis/watchdog";
 
 import { Connections } from "../enums";
 
@@ -29,18 +32,25 @@ function OnlineProvider({ children }: { children: ReactNode }) {
     return () => clearInterval(interval);
   }, [online]);
 
+  useEffect(() => {
+    syncAnalysis();
+  }, [online]);
+
+  async function syncAnalysis() {
+    if (!online.isAnalysisOnline) {
+      return;
+    }
+
+    await AnalysisSyncHandler.sync();
+  }
+
   async function updateOnlineState() {
-    const isReportOnlinePromise = isServiceOnline(
-      Connections.REPORTER + "/health"
-    );
+    const isReportOnlinePromise = isReportServiceOnline();
 
-    const isAuthOnlinePromise = isServiceOnline(
-      Connections.GATEKEEPER + "/health"
-    );
+    const isAuthOnlinePromise = isAuthServiceOnline();
 
-    const isAnalysisOnlinePromise = isServiceOnline(
-      Connections.FARMAS + "/health"
-    );
+    const isAnalysisOnlinePromise =
+      AnalysisServiceWatchdog.isAnalysisServiceOnline();
 
     const [isReportOnline, isAuthOnline, isAnalysisOnline] = await Promise.all([
       isReportOnlinePromise,
@@ -59,16 +69,22 @@ function OnlineProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  async function isServiceOnline(healthEndpoint: string): Promise<boolean> {
-    return client
-      .get(healthEndpoint)
-      .then((response) => response.status === 200)
-      .catch((_) => false);
-  }
-
   return (
     <OnlineContext.Provider value={online}>{children}</OnlineContext.Provider>
   );
+}
+
+export const isAuthServiceOnline = async () =>
+  await isServiceOnline(Connections.GATEKEEPER + "/health");
+
+export const isReportServiceOnline = async () =>
+  await isServiceOnline(Connections.REPORTER + "/health");
+
+async function isServiceOnline(healthEndpoint: string): Promise<boolean> {
+  return client
+    .get(healthEndpoint)
+    .then((response) => response.status === 200)
+    .catch((_) => false);
 }
 
 export { OnlineContext, OnlineProvider };

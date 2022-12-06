@@ -1,39 +1,37 @@
-export interface SubstanceModelRegistry {
-   SubstanceRegistryId: string;
-   Value: number;
-   Timestamp: Date;
-}
+export type AnalysisCreationProps = {
+  Substances: SubstanceModelRegistry[];
+};
 
-export interface Analysis {
-   Substances: SubstanceModelRegistry[];
-}
-export type AnalysisProps = {
-   farmId: string;
-   id: string;
-   operatorId: string;
-   substance: {
-      id: string;
-      soilAnalysisId: string;
-      substanceRegistry: {
-         description: string;
-         id: string;
-         maxValue: number;
-         method: string;
-         minValue: number;
-         name: string;
-         unit: string;
-         version: number;
-      };
-      substanceRegistryId: string;
-      timestamp: string;
-      value: number;
-   }[];
-   timestamp: string;
-}[];
+export type SubstanceModelRegistry = {
+  SubstanceRegistryId: string;
+  Value: number;
+  Timestamp: Date;
+};
 
-export interface AnalysisModel {
-   id: string;
-   operatorId: string;
-   timestamp: string;
-   substance: AnalysisProps[];
-}
+export type ProcessedAnalysis = {
+  id: string;
+  farmId: string;
+  operatorId: string;
+  timestamp: string;
+  substance: Substance[];
+};
+
+type SubstanceRegistry = {
+  id: string;
+  name: string;
+  description: string;
+  maxValue: number;
+  minValue: number;
+  unit: string;
+  method: string;
+  version: number;
+};
+
+type Substance = {
+  id: string;
+  soilAnalysisId: string;
+  substanceRegistry: SubstanceRegistry;
+  substanceRegistryId: string;
+  timestamp: string;
+  value: number;
+};
