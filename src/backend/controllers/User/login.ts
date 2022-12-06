@@ -1,6 +1,7 @@
 // types
 import axios, { AxiosError } from "axios";
 import { Connections, LocalData } from "../../enums";
+import { GetAnalysis } from "../Analysis";
 import { LoginProps, LoginResponse } from "./types";
 
 export async function Login(props: LoginProps) {
@@ -9,7 +10,7 @@ export async function Login(props: LoginProps) {
 
       const { data } = await axios.post<LoginResponse>(Connections.GATEKEEPER + "/Session", props);
       localStorage.setItem(LocalData.USER_KEY, JSON.stringify(data));
-
+      GetAnalysis();
       return data;
    } catch (error) {
       const err = error as AxiosError;

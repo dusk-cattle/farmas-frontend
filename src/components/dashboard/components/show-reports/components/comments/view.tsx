@@ -5,10 +5,14 @@ import { useContext, useEffect, useState } from 'react';
 import { Comment } from '../../../../../../backend/controllers/Reporter/types';
 
 // usecases
-import { CreateComment, GetComments } from '../../../../../../backend';
+import {
+  CreateComment,
+  GetComments,
+  useWatchdog,
+} from '../../../../../../backend';
 
 // contexts
-import { SessionContext } from '../../../../../../contexts';
+import { SessionContext, ToastContext } from '../../../../../../contexts';
 
 // styles
 import { Header, BackButton, BackIcon, Title } from '../../styles';
@@ -26,6 +30,7 @@ import {
 
 // types
 import { CommentsProps } from './types';
+import { WarnIcon } from '../../../../../warn-icon';
 
 interface ExtendedComment extends Comment {
   isOwn?: boolean;
@@ -71,6 +76,17 @@ export function Comments(props: CommentsProps) {
     RefreshComments();
   }
 
+  const { toast } = useContext(ToastContext);
+
+  const { isReportOnline: isOnline } = useWatchdog();
+
+  const offlineMessage =
+    'Podem haver mensagens recentes, mas você não pode vê-las neste momento por estar sem internet!';
+
+  useEffect(() => {
+    if (!isOnline) toast(offlineMessage, 'error', 6000);
+  }, [isOnline]);
+
   return (
     <Container>
       <Header>
@@ -79,6 +95,8 @@ export function Comments(props: CommentsProps) {
         </BackButton>
 
         <Title>Comentários</Title>
+
+        {!isOnline && <WarnIcon message={offlineMessage} />}
       </Header>
 
       <ConversationSection>
@@ -108,9 +126,21 @@ export function Comments(props: CommentsProps) {
           value={currentComment}
           placeholder="Digite uma mensagem..."
           onChange={(e) => setCurrentComment(e.target.value)}
+          style={
+            !isOnline
+              ? {
+                  pointerEvents: 'none',
+                  opacity: 0.4,
+                  background: '#F0DBE5',
+                }
+              : {}
+          }
         />
 
-        <SendIcon onClick={createComment} />
+        <SendIcon
+          onClick={isOnline ? createComment : undefined}
+          style={!isOnline ? { opacity: 0.4 } : {}}
+        />
       </CommentInputArea>
     </Container>
   );

@@ -1,0 +1,1 @@
+export { WarnIcon } from './view';
