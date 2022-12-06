@@ -1,18 +1,18 @@
 // deps
-import { useContext, useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useContext, useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 // models
-import { Substance } from "../../../../models";
+import { Substance } from '../../../../models';
 
 // usecases
-import { getSubstances, postAnalysis } from "../../../../usecases";
+import { getSubstances, postAnalysis } from '../../../../usecases';
 
 // contexts
-import { ToastContext } from "../../../../contexts";
+import { ToastContext } from '../../../../contexts';
 
 // components
-import { Input, SelectSubstance, WarnIcon } from "../../..";
+import { Input, SelectSubstance, WarnIcon } from '../../..';
 
 // styles
 import {
@@ -27,16 +27,16 @@ import {
   PlusIcon,
   SubmitButton,
   SubstanceInput,
-} from "./styles";
+} from './styles';
 
 // types
-import { CreateAnalysisProps, FormData } from "./types";
-import { useWatchdog } from "../../../../backend";
+import { CreateAnalysisProps, FormData } from './types';
+import { useWatchdog } from '../../../../backend';
 
 const birthDateFormat = /[0-9]{2}\.[0-9]{2}\.[0-9]{4}/g;
 
-function formatToDate(value: string, separator: string = ".") {
-  const filteredValue = value.replace(/[^0-9]/g, "");
+function formatToDate(value: string, separator: string = '.') {
+  const filteredValue = value.replace(/[^0-9]/g, '');
   const cuttedValue = filteredValue.substring(0, 8);
 
   const daySlice = cuttedValue.slice(0, 2);
@@ -44,9 +44,9 @@ function formatToDate(value: string, separator: string = ".") {
   const yearSlice = cuttedValue.slice(4, 8);
 
   const slices: string[] = [];
-  if (daySlice !== "") slices.push(daySlice);
-  if (monthSlice !== "") slices.push(monthSlice);
-  if (yearSlice !== "") slices.push(yearSlice);
+  if (daySlice !== '') slices.push(daySlice);
+  if (monthSlice !== '') slices.push(monthSlice);
+  if (yearSlice !== '') slices.push(yearSlice);
 
   const formattedDate = slices.join(separator);
 
@@ -58,7 +58,7 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
 
   const { handleSubmit, register, formState, unregister, trigger } =
     useForm<FormData>({
-      mode: "onChange",
+      mode: 'onChange',
     });
 
   const [allSubstances, setAllSubstances] = useState<Substance[]>([]);
@@ -70,7 +70,7 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
       const susbtances = await getSubstances();
 
       if (!susbtances.length)
-        return toast("Não foi possível carregar as substâncias", "error");
+        return toast('Não foi possível carregar as substâncias', 'error');
       setAllSubstances(susbtances);
     })();
   }, [toast]);
@@ -91,18 +91,18 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
     try {
       const { timestamp, ...substances } = data;
 
-      const [month, day, year] = timestamp.split(".");
+      const [month, day, year] = timestamp.split('.');
 
       await postAnalysis({
         substances,
-        timestamp: new Date([day, month, year].join("/")),
+        timestamp: new Date([day, month, year].join('/')),
       });
 
-      toast("Análise enviada com sucesso!", "success");
+      toast('Análise enviada com sucesso!', 'success');
 
       onClickBack?.();
     } catch (e) {
-      toast("Ocorreu um erro para enviar a análise", "error");
+      toast('Ocorreu um erro para enviar a análise', 'error');
     }
   }
 
@@ -111,21 +111,21 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
   }
 
   function handleTimestampChange(event: any) {
-    const inputValue: string = event?.target?.value || "";
+    const inputValue: string = event?.target?.value || '';
     const formattedDate = formatToDate(inputValue);
 
     event.target.value = formattedDate;
 
-    trigger("birthDate");
+    trigger('birthDate');
   }
 
   const { isAnalysisOnline: isOnline } = useWatchdog();
 
   const offlineMessage =
-    "As análises podem ser cadastradas, mas não serão exibidas enquanto você estiver fora do ar.";
+    'As análises podem ser cadastradas, mas não serão exibidas enquanto você estiver fora do ar.';
 
   useEffect(() => {
-    if (!isOnline) toast(offlineMessage, "error", 6000);
+    if (!isOnline) toast(offlineMessage, 'error', 6000);
   }, [isOnline]);
 
   return (
@@ -141,7 +141,7 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
 
       <Form onSubmit={handleSubmit(createAnalysis)}>
         <Input
-          {...register("timestamp", {
+          {...register('timestamp', {
             required: true,
             validate: validateTimestampInput,
           })}

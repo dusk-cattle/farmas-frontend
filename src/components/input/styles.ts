@@ -75,6 +75,7 @@ export const ClosedEyeIcon = styled(RiEyeCloseLine)`
 export const InfoIcon = styled(MdInfoOutline)`
   min-width: 1rem;
   min-height: 1rem;
+  z-index: 10;
 
   color: ${({ theme }) => theme.foreground};
 `;
@@ -92,7 +93,7 @@ export const InfoBalloon = styled.div`
   top: 1.5rem;
   right: 1.5rem;
   padding: 0.75rem 1rem;
-  z-index: 10;
+  z-index: 11;
 
   position: absolute;
 
