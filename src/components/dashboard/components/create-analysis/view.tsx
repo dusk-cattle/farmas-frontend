@@ -12,7 +12,7 @@ import { getSubstances, postAnalysis } from '../../../../usecases';
 import { ToastContext } from '../../../../contexts';
 
 // components
-import { Input, SelectSubstance } from '../../..';
+import { Input, SelectSubstance, WarnIcon } from '../../..';
 
 // styles
 import {
@@ -27,7 +27,6 @@ import {
   PlusIcon,
   SubmitButton,
   SubstanceInput,
-  WarnIcon,
 } from './styles';
 
 // types
@@ -122,13 +121,11 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
 
   const { isAnalysisOnline: isOnline } = useWatchdog();
 
+  const offlineMessage =
+    'As análises podem ser cadastradas, mas não serão exibidas enquanto você estiver fora do ar.';
+
   useEffect(() => {
-    if (!isOnline)
-      toast(
-        'As análises podem ser cadastradas, mas não serão exibidas enquanto você estiver fora do ar.',
-        'error',
-        6000
-      );
+    if (!isOnline) toast(offlineMessage, 'error', 6000);
   }, [isOnline]);
 
   return (
@@ -139,7 +136,7 @@ export function CreateAnalysis(props: CreateAnalysisProps) {
         </BackButton>
         <Title>Nova Análise de Solo</Title>
 
-        {!isOnline && <WarnIcon />}
+        {!isOnline && <WarnIcon message={offlineMessage} />}
       </Header>
 
       <Form onSubmit={handleSubmit(createAnalysis)}>

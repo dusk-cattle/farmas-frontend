@@ -1,5 +1,6 @@
 // deps
 import { useContext, useEffect, useState } from 'react';
+import { useWatchdog } from '../../../../backend';
 import { ToastContext } from '../../../../contexts';
 
 // models
@@ -7,6 +8,7 @@ import { Report } from '../../../../models';
 
 // usecases
 import { getReports } from '../../../../usecases';
+import { WarnIcon } from '../../../warn-icon';
 
 // components
 import { Comments, SearchInput } from './components';
@@ -60,6 +62,15 @@ export function ShowReports(props: ShowReportsProps) {
       }
     })();
   }, []);
+
+  const { isReportOnline: isOnline } = useWatchdog();
+
+  const offlineMessage =
+    'Por estar sem internet, você pode acabar não enxergando os relatórios recentes';
+
+  useEffect(() => {
+    if (!isOnline) toast(offlineMessage, 'error', 6000);
+  }, [isOnline]);
 
   const [showComments, setShowComments] = useState(false);
 
@@ -193,6 +204,9 @@ export function ShowReports(props: ShowReportsProps) {
           <BackIcon />
         </BackButton>
         <Title>Relatórios</Title>
+
+        {!isOnline && !currentHTML && <WarnIcon message={offlineMessage} />}
+
         {currentHTML && <CommentIcon onClick={() => setShowComments(true)} />}
       </Header>
 

@@ -1,5 +1,5 @@
 // deps
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 // usecases
@@ -9,7 +9,7 @@ import { associateWorker } from '../../../../usecases';
 import { SessionContext, ToastContext } from '../../../../contexts';
 
 // components
-import { Input } from '../../..';
+import { Input, WarnIcon } from '../../..';
 
 // styles
 import {
@@ -24,6 +24,7 @@ import {
 
 // types
 import { AddWorkerProps, FormData } from './types';
+import { useWatchdog } from '../../../../backend';
 
 export function AddWorker(props: AddWorkerProps) {
   const { onClickBack } = props;
@@ -55,6 +56,15 @@ export function AddWorker(props: AddWorkerProps) {
     }
   }
 
+  const { isAuthOnline: isOnline } = useWatchdog();
+
+  const offlineMessage =
+    'Não é possível adicionar operadores enquanto você está sem internet.';
+
+  useEffect(() => {
+    if (!isOnline) toast(offlineMessage, 'error', 6000);
+  }, [isOnline]);
+
   return (
     <Container>
       <Header>
@@ -62,6 +72,8 @@ export function AddWorker(props: AddWorkerProps) {
           <BackIcon />
         </BackButton>
         <Title>Adicionar Operador</Title>
+
+        {!isOnline && <WarnIcon message={offlineMessage} />}
       </Header>
 
       <Form onSubmit={handleSubmit(addWorker)}>
@@ -73,6 +85,13 @@ export function AddWorker(props: AddWorkerProps) {
           label="E-mail"
           placeholder="operador@exemplo.com"
           error={formState.errors.email?.message}
+          style={
+            !isOnline
+              ? {
+                  pointerEvents: 'none',
+                }
+              : {}
+          }
         />
 
         <SubmitButton disabled={!formState.isValid} type="submit">
