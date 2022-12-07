@@ -1,14 +1,14 @@
 // deps
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 // models
-import { FarmShape } from '../../../../models';
+import { FarmShape } from "../../../../models";
 
 // usecases
-import { getFarmShape } from '../../../../usecases';
+import { getFarmShape, getSubstances } from "../../../../usecases";
 
 // styles
-import { UnemployedContainer } from './styles';
+import { UnemployedContainer } from "./styles";
 
 export function FarmMap() {
   const [farmShape, setFarmShape] = useState<FarmShape>([]);
@@ -18,9 +18,15 @@ export function FarmMap() {
   useEffect(() => {
     (async () => {
       try {
+        await getSubstances();
+      } catch {
+        // warmup substances
+      }
+
+      try {
         const shape = await getFarmShape();
 
-        if (!shape) return
+        if (!shape) return;
 
         const minX = shape.reduce(
           (min, value) => (value.x < min ? value.x : min),
@@ -233,7 +239,7 @@ export function FarmMap() {
       viewBox="0 0 200 200"
       width={270}
       height="100%"
-      style={{ transform: 'rotate(-90deg)', overflow: 'visible' }}
+      style={{ transform: "rotate(-90deg)", overflow: "visible" }}
     >
       <path
         fill="#287830"
@@ -242,12 +248,13 @@ export function FarmMap() {
         strokeLinecap="round"
         strokeLinejoin="round"
         opacity={0.3}
-        d={`${farmShape.length
+        d={`${
+          farmShape.length
             ? farmShape
-              .map((value, i) => `${i ? 'L' : 'M'}${value.x} ${value.y}`)
-              .join(' ') + ' Z'
-            : ''
-          }`}
+                .map((value, i) => `${i ? "L" : "M"}${value.x} ${value.y}`)
+                .join(" ") + " Z"
+            : ""
+        }`}
       />
       {renderBushs()}
       {renderGrass()}
