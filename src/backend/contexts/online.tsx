@@ -7,7 +7,7 @@ import { AnalysisServiceWatchdog } from "../controllers/Analysis/watchdog";
 import { Connections } from "../enums";
 
 const client = axios.create({
-  timeout: 100,
+  timeout: 400,
 });
 
 interface OnlineState {
