@@ -65,6 +65,13 @@ export const Input = forwardRef((props: InputProps, ref: any) => {
             ? 'number'
             : rest.type
         }
+        style={
+          rest.type === 'substance'
+            ? {
+                textAlign: 'left',
+              }
+            : {}
+        }
       />
 
       {unit && (

@@ -35,7 +35,7 @@ export function RegisterPage() {
 
   const password = watch('password');
 
-  const [, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function validateEmailFormat(value: string) {
     return (
@@ -53,14 +53,16 @@ export function RegisterPage() {
 
     const { name, email, password } = data;
 
-    const createdUser = await createUser({ name, email, password });
+    try {
+      await createUser({ name, email, password });
 
-    if (createdUser) {
       const logged = await login({ email, password });
 
       if (logged) navigate(Routes.ROOT);
       else toast('Não foi possível realizar o login', 'error');
-    } else toast('Não foi possível registrar o usuário', 'error');
+    } catch (error: any) {
+      toast(error.message, 'error');
+    }
 
     setLoading(false);
   }
@@ -108,8 +110,8 @@ export function RegisterPage() {
         error={formState.errors.confirmPassword?.message}
       />
 
-      <Button type="submit" disabled={!formState.isValid}>
-        Cadastrar
+      <Button type="submit" disabled={!formState.isValid || loading}>
+        {loading ? '...' : 'Cadastrar'}
       </Button>
       <Span>
         Já possui uma conta? <Link to={Routes.LOGIN}>Entre</Link>
