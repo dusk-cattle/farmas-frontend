@@ -37,6 +37,7 @@ import {
 import { WeatherApiResponse, WeatherData } from './types';
 import { GetCoordinates, useWatchdog } from '../../backend';
 import { apiKey } from '../../keys/weatherapi';
+import { WarnIcon } from '../warn-icon';
 
 export function Dashboard() {
   const [creatingAnalysis, setCreatingAnalysis] = useState(false);
@@ -69,15 +70,15 @@ export function Dashboard() {
 
   const [wasOnline, setWasOnline] = useState(isOnline);
 
-  useEffect(() => {
-    if (!isOnline)
-      toast(
-        'Você está fora do ar. As funcionalidades do aplicativo ficarão limitadas.',
-        'error',
-        6000
-      );
+  const offlineMessage =
+    'Você está fora do ar. Os dados exibidos não serão atualizados até que você esteja online novamente.';
 
+  useEffect(() => {
     if (!wasOnline && isOnline) toast('Você está online novamente!', 'success');
+
+    if (creatingAnalysis || addingWorker || showingReports) return;
+
+    if (!isAnalysisOnline) toast(offlineMessage, 'error', 6000);
 
     setWasOnline(isOnline);
   }, [isOnline]);
@@ -135,6 +136,7 @@ export function Dashboard() {
               {!isOnline && <OfflineIcon />}
               {data?.resource?.name}
             </Title>
+            {!isAnalysisOnline && <WarnIcon message={offlineMessage} />}
           </Header>
 
           <FarmContainer>

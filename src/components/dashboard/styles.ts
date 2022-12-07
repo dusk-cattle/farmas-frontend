@@ -41,8 +41,10 @@ export const Header = styled.header`
   z-index: 10;
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   position: fixed;
+  gap: 1rem;
 `;
 
 export const Title = styled.h1`
